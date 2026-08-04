@@ -1,0 +1,352 @@
+@charset "UTF-8";
+*,
+::before,
+::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+ul,
+li {
+    list-style: none;
+}
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+
+/* ============================================
+   全体レイアウト（Apple風）
+============================================ */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #f5f5f7; /* Appleの薄いグレー */
+    color: #333;
+}
+
+.app-title {
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.6em;
+    font-weight: 600;
+    color: #222;
+    margin-top: 28px;
+    margin-bottom: 14px;
+    letter-spacing: 0.5px;
+}
+
+/* ============================
+   サブタイトル（説明文）
+============================ */
+.app-subtitle {
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95em;
+    color: #555;               /* ← 柔らかいグレー */
+    margin-top: -4px;          /* ← タイトルとの距離を詰める */
+    margin-bottom: 22px;       /* ← ボタンとの余白を広く */
+    letter-spacing: 0.3px;
+}
+/* ============================================
+   ヘッダー（中央縦並びボタン）
+============================================ */
+.app-header {
+    display: flex;
+    justify-content: center;
+    padding: 40px 0;
+}
+
+.header-buttons-vertical {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;                /* ボタン間の余白 */
+}
+
+/* Apple風ボタン共通 */
+.header-buttons-vertical button {
+    width: 250px;
+    padding: 20px 0;
+    border-radius: 22px;
+    border: none;
+    font-size: 1.15em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+}
+
+/* 追加（Appleグリーン） */
+#add-service-open-btn {
+    background: #34c759;
+    color: #fff;
+}
+#add-service-open-btn:hover {
+    background: #28a745;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+/* 編集モード（Appleブルー） */
+#edit-mode-btn {
+    background: #007aff;
+    color: #fff;
+}
+#edit-mode-btn:hover {
+    background: #005ecb;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+/* カテゴリ追加（Appleオレンジ） */
+#open-category-modal {
+    background: #ff9500;
+    color: #fff;
+}
+#open-category-modal:hover {
+    background: #e08900;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+/* ============================================
+   カテゴリタイトル
+============================================ */
+
+
+/* カードグループ */
+.category-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    justify-content: center;
+    padding-bottom: 40px;
+}
+
+/* ============================================
+   Apple風カードデザイン（高級感アップ）
+============================================ */
+.service-card {
+    width: 200px;
+    padding: 22px;
+    border-radius: 24px;
+    background: #ffffff;
+    position: relative;
+    box-shadow:
+        0 6px 18px rgba(0,0,0,0.10),
+        0 2px 6px rgba(0,0,0,0.06);
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-6px);
+    box-shadow:
+        0 14px 32px rgba(0,0,0,0.15),
+        0 6px 12px rgba(0,0,0,0.10);
+}
+
+.service-card img {
+    width: 100%;
+    height: 130px;
+    object-fit: contain;
+    border-radius: 18px;
+    background: #fafafa;
+    padding: 10px;
+}
+
+/* タイトル */
+.service-card h3 {
+    margin-top: 14px;
+    font-size: 1.15em;
+    font-weight: 600;
+    color: #222;
+    letter-spacing: 0.5px;
+}
+
+/* ============================================
+   削除ボタン（Apple風）
+============================================ */
+.delete-btn {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    background: #ff3b30;
+    color: #fff;
+    border: none;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    font-size: 18px;
+    line-height: 26px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    display: none;
+}
+
+/* ============================================
+   モーダル共通（Appleカード風）
+============================================ */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background: #fff;
+    margin: 140px auto;
+    padding: 28px;
+    width: 90%;
+    max-width: 380px;
+    border-radius: 22px;
+    box-shadow:
+        0 12px 32px rgba(0,0,0,0.15),
+        0 4px 10px rgba(0,0,0,0.08);
+    animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.modal-close {
+    float: right;
+    font-size: 26px;
+    cursor: pointer;
+    color: #666;
+}
+
+/* ============================================
+   モーダル内フォーム
+============================================ */
+.modal-content input,
+.modal-content select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 14px;
+    border-radius: 14px;
+    border: 1px solid #ddd;
+    background: #fafafa;
+    font-size: 1em;
+    transition: border 0.2s ease, background 0.2s ease;
+}
+
+.modal-content input:focus,
+.modal-content select:focus {
+    border-color: #007aff;
+    background: #fff;
+    outline: none;
+}
+
+/* ============================================
+   アイコンギャラリー
+============================================ */
+.icon-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin: 20px 0;
+    justify-content: center;
+}
+
+.icon-choice {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    border-radius: 16px;
+    padding: 8px;
+    background: #f2f2f7;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.icon-choice:hover {
+    transform: scale(1.08);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.icon-choice.selected {
+    border: 3px solid #007aff;
+    background: #fff;
+}
+
+/* ============================================
+   モーダル内ボタン（Appleブルー）
+============================================ */
+#add-service-btn,
+#add-category-btn,
+#save-pass-btn,
+#edit-pass-btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 16px;
+    border-radius: 14px;
+    border: none;
+    background: #007aff;
+    color: #fff;
+    font-size: 1.05em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.25s ease, transform 0.25s ease;
+}
+
+#add-service-btn:hover,
+#add-category-btn:hover,
+#save-pass-btn:hover,
+#edit-pass-btn:hover {
+    background: #005ecb;
+    transform: translateY(-3px);
+}
+
+/* ============================
+   スマホ（〜599px）
+   ボタンを画面幅いっぱいに
+============================ */
+/* スマホ（〜599px） */
+@media (max-width: 599px) {
+    .app-title {
+        font-size: 1.7em;      /* ← スマホは少し大きく */
+        margin-top: 32px;
+        margin-bottom: 18px;
+    }
+}
+
+
+/* ============================
+   タブレット（600〜899px）
+============================ */
+@media (min-width: 600px) and (max-width: 899px) {
+    .header-buttons-vertical button {
+        width: 70%;
+        max-width: 300px;
+        padding: 18px 0;
+        border-radius: 20px;
+        font-size: 1.1em;
+    }
+}
+/* スマホ（〜599px） */
+@media (max-width: 599px) {
+    .app-subtitle {
+        font-size: 1em;        /* ← 少し大きくして読みやすく */
+        margin-bottom: 26px;   /* ← ボタンとの余白を広めに */
+    }
+}
+/* ============================
+   PC（900px〜）
+============================ */
+@media (min-width: 900px) {
+    .header-buttons-vertical button {
+        width: 240px;            /* ← PCは固定幅のほうが美しい */
+        padding: 16px 0;
+        border-radius: 18px;
+        font-size: 1.05em;
+    }
+}

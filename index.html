@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="たくさんあるパスワードを忘れないためにこういうものを作成してみました。">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <title>パスワード管理</title>
+        <link rel="manifest" href="manifest.json">
+
+    </head>
+    <body>
+      <h1 class="app-title">Secure Notes</h1>
+      <p class="app-subtitle">あなたの大切な情報をまとめて保管します</p>
+    <!-- ============================
+         ヘッダー（中央縦並びボタン）
+    ============================ -->
+    <header class="app-header">
+        <div class="header-buttons-vertical">
+            <button id="add-service-open-btn">追加</button>
+            <button id="edit-mode-btn">編集モード</button>
+        </div>
+    </header>
+
+
+    <!-- ============================
+         カード一覧（カテゴリごと）
+    ============================ -->
+    <main>
+        <div id="service-container" class="service-container">
+            <!-- JSでカテゴリ＋カードが描画される -->
+        </div>
+    </main>
+
+
+    <!-- ============================
+         サービス追加モーダル
+    ============================ -->
+    <div id="add-service-modal" class="modal">
+        <div class="modal-content">
+            <span id="add-service-close" class="modal-close">&times;</span>
+
+            <h2>サービスを追加する</h2>
+
+            <input type="text" id="new-service-name" placeholder="サービス名">
+            <select id="new-service-type">
+                <option value="パスワード">パスワード</option>
+                <option value="メールアドレス">メールアドレス</option>
+                <option value="ID番号">ID番号</option>
+                <option value="暗証番号">暗証番号</option>
+                <option value="注文番号">注文番号</option>
+            </select>
+            <input type="text" id="new-service-value" placeholder="内容を入力">
+
+        
+            <!-- アイコンギャラリー -->
+            <div class="icon-gallery">
+                <img src="/images/kkrn_icon_cart_2-768x768.png" data-icon="/images/kkrn_icon_cart_2-768x768.png" class="icon-choice">
+                <img src="/images/kkrn_icon_creditcard_6-768x768.png" data-icon="/images/kkrn_icon_creditcard_6-768x768.png" class="icon-choice">
+                <img src="/images/kkrn_icon_mail_6-768x768.png" data-icon="/images/kkrn_icon_mail_6-768x768.png" class="icon-choice">
+                <img src="/images/kkrn_icon_notepc_1-768x768.png" data-icon="/images/kkrn_icon_notepc_1-768x768.png" class="icon-choice">
+                <img src="/images/kkrn_icon_security_11-768x768.png" data-icon="/images/kkrn_icon_security_11-768x768.png" class="icon-choice">
+                <img src="/images/kkrn_icon_user_1-768x768.png" date-icon="/images/kkrn_icon_user_1-768x768.png" class="icon-choice">
+                <img src="/images/kkrn_icon_wifi_11-768x768.png" date-icon="/images/kkrn_icon_wifi_11-768x768.png" class="icon-choice">
+                <img src="/images/kkrn_icon_smartphone_9-768x768.png" date-icon="/images/kkrn_icon_smartphone_9-768x768.png" class="icon-choice">
+            </div>
+
+            <button id="add-service-btn">登録する</button>
+        </div>
+    </div>
+
+
+    <!-- ============================
+
+
+    <!-- ============================
+         パスワード表示モーダル
+    ============================ -->
+    <div id="password-modal" class="modal">
+        <div class="modal-content">
+            <span id="modal-close" class="modal-close">&times;</span>
+
+            <h2 id="modal-title"></h2>
+            <p id="modal-pass"></p>
+
+            <button id="edit-pass-btn">パスワードを編集する</button>
+
+            <div id="edit-form" style="display:none; margin-top:15px;">
+                <input type="text" id="edit-pass-input" placeholder="新しいパスワードを入力">
+                <button id="save-pass-btn">保存</button>
+            </div>
+        </div>
+    </div>
+
+
+
+        <script src="script.js"></script>
+        <script>
+                if ("serviceWorker" in navigator) {
+                   navigator.serviceWorker.register("service-worker.js")
+                     .then(() => console.log("Service Worker registered"));
+               }
+        </script>
+
+    </body>
+</html>
