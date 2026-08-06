@@ -57,6 +57,7 @@ body {
     display: flex;
     justify-content: center;
     padding: 40px 0;
+    maegin-top: 20px;
 }
 
 .header-buttons-vertical {
@@ -70,6 +71,7 @@ body {
 .header-buttons-vertical button {
     width: 250px;
     padding: 20px 0;
+    margin: 12px 0;
     border-radius: 22px;
     border: none;
     font-size: 1.15em;
