@@ -186,6 +186,24 @@ document.getElementById("add-service-open-btn").addEventListener("click", () => 
 document.getElementById("add-service-close").addEventListener("click", () => {
     document.getElementById("add-service-modal").style.display = "none";
 });
+document.getElementById("reset-add-form-btn").addEventListener("click", () => {
+    const nameInput = document.getElementById("new-service-name");
+    const valueInput = document.getElementById("new-service-value");
+    const typeSelect = document.getElementById("new-service-type");
+
+    // 入力欄を確実にリセット
+    nameInput.value = "";
+    valueInput.value = "";
+    valueInput.value = ""; // ← スマホ対策（内部値が残るバグ対策）
+    typeSelect.selectedIndex = 0;
+
+    // アイコン選択解除
+    selectedIcon = null;
+    document.querySelectorAll(".icon-choice").forEach(i => i.classList.remove("selected"));
+
+    // スマホでフォーカスが残ると内部値が残るため、強制解除
+    document.activeElement.blur();
+});
 
 /* ============================================
    初期描画
