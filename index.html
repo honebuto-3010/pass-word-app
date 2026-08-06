@@ -66,6 +66,7 @@
             </div>
 
             <button id="add-service-btn">登録する</button>
+            <button id="reset-add-form-btn" class="add-btn">入力をリセット</button>
         </div>
     </div>
 
@@ -97,8 +98,8 @@
         <script src="script.js"></script>
         <script>
                 if ("serviceWorker" in navigator) {
-                   navigator.serviceWorker.register("service-worker.js")
-                     .then(() => console.log("Service Worker registered"));
+                   navigator.serviceWorker.register("./service-worker.js")
+                
                }
         </script>
 
