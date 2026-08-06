@@ -99,7 +99,7 @@ document.getElementById("add-service-btn").addEventListener("click", () => {
         name,
         icon: selectedIcon,
         type,      // ← 種類
-        value      // ← 入力内容
+        pass: value      // ← 入力内容
     };
 
     services.push(newService);
