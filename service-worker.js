@@ -1,4 +1,4 @@
-const CACHE_NAME = "secure-notes-cache-v2";
+const CACHE_NAME = "secure-notes-cache-v3";
 const urlsToCache = [
   "./",
   "./index.html",
@@ -9,21 +9,8 @@ const urlsToCache = [
   "./icons/icon-512.png"
 ];
 
-// インストール（初回キャッシュ）
-//self.addEventListener("install", event => {
+self.addEventListener("install", event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll(urlsToCache);
-    })
-  );
-//});
-
-// オフライン時はキャッシュを返す
-self.addEventListener("fetch", event => {
-  event.respondWith(
-    caches.match(event.request).then(response => {
-      if (response) return response;
-      return fetch(event.request);
-    })
+    caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
   );
 });
