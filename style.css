@@ -64,21 +64,22 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    min-height: 45vh;
     gap: 20px;                /* ボタン間の余白 */
 }
 
 /* Apple風ボタン共通 */
 .header-buttons-vertical button {
-    width: 250px;
-    padding: 20px 0;
-    margin: 15px 0;
-    border-radius: 22px;
+    width: 240px;
+    padding: 14px 0;
+    border-radius: 14px;
     border: none;
-    font-size: 1.15em;
+    font-size: 1.1em;
     font-weight: 600;
     cursor: pointer;
-    transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+    transition: 0.2s ease;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
 }
 
 /* 追加（Appleグリーン） */
