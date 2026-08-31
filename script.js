@@ -88,7 +88,12 @@ document.getElementById("add-service-btn").addEventListener("click", () => {
     const name = document.getElementById("new-service-name").value.trim();
     const type = document.getElementById("new-service-type").value;
     const value = document.getElementById("new-service-value").value.trim();
-
+    // ★ サービス名に種類を入れてしまった場合の警告
+    const invalidNames = ["パスワード", "暗証番号", "メールアドレス", "ID番号", "注文番号"];
+    if (invalidNames.includes(name)) {
+        alert("サービス名にはサイト名やサービス名を入力してください（例：Amazon / auなど）");
+        return;
+    }
     if (!name || !value || !selectedIcon) {
         alert("入力が不足しています");
         return;
@@ -161,7 +166,7 @@ document.getElementById("save-pass-btn").addEventListener("click", () => {
 
 const typeSelect = document.getElementById("new-service-type");
 const valueInput = document.getElementById("new-service-value");
-
+const nameInput = document.getElementById("new-service-name");
 typeSelect.addEventListener("change", () => {
     const type = typeSelect.value;
 
@@ -174,6 +179,8 @@ typeSelect.addEventListener("change", () => {
     };
 
     valueInput.placeholder = placeholders[type];
+   //サービス名の説明を固定（誤入力防止）
+   nameInput.placehplder = "サービス名（例：Amazon / au / mont-bellなど)";
 });
 
 /* ============================================
