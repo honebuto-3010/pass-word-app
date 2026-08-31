@@ -180,7 +180,7 @@ typeSelect.addEventListener("change", () => {
 
     valueInput.placeholder = placeholders[type];
    //サービス名の説明を固定（誤入力防止）
-   nameInput.placeholder = "サービス名（例：Amazon / au / mont-bellなど)";
+   nameInput.placeholder = "サービス名（例：Amazon / au / mont-bellなど) ";
 });
 
 /* ============================================
