@@ -135,11 +135,16 @@ function showPassword(service) {
     currentService = service;
 
     document.getElementById("modal-title").textContent = service.name;
+
+    // 種類に応じてラベルを変える
+    const label = service.type ? service.type : "内容";
+
     document.getElementById("modal-pass").textContent =
-        service.pass ? `パスワード：${service.pass}` : "パスワードが登録されていません";
+        service.pass ? `${label}：${service.pass}` : `${label}が登録されていません`;
 
     document.getElementById("password-modal").style.display = "block";
 }
+
 
 document.getElementById("modal-close").onclick = () => {
     document.getElementById("password-modal").style.display = "none";
