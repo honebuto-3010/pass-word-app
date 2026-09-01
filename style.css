@@ -357,3 +357,18 @@ body {
         font-size: 1.05em;
     }
 }
+/* ============================
+   スマホ横向き（〜900px）
+   → 縦向きと同じく 90% に広げる
+============================ */
+@media (orientation: landscape) and (max-width: 900px) {
+    .header-buttons-vertical button,
+    #add-service-open-btn,
+    #edit-mode-btn {
+        width: 90%;
+        max-width: 350px;
+        padding: 18px 0;
+        border-radius: 20px;
+        font-size: 1.1em;
+    }
+}
