@@ -1,3 +1,24 @@
+console.log("script.js 読み込みOK");
+
+const request = indexedDB.open("secureNotesDB", 1);
+
+request.onupgradeneeded = (event) => {
+    console.log("IndexedDB: onupgradeneeded 発生");
+    const db = event.target.result;
+    if (!db.objectStoreNames.contains("notes")) {
+        db.createObjectStore("notes", { keyPath: "id", autoIncrement: true });
+        console.log("notes ストア作成");
+    }
+};
+
+request.onsuccess = (event) => {
+    console.log("IndexedDB: オープン成功");
+};
+
+request.onerror = (event) => {
+    console.log("IndexedDB: オープン失敗", event);
+};
+
 /* ============================================
    初期サービス（完全に空で開始）
 ============================================ */
@@ -88,12 +109,7 @@ document.getElementById("add-service-btn").addEventListener("click", () => {
     const name = document.getElementById("new-service-name").value.trim();
     const type = document.getElementById("new-service-type").value;
     const value = document.getElementById("new-service-value").value.trim();
-    // ★ サービス名に種類を入れてしまった場合の警告
-    const invalidNames = ["パスワード", "暗証番号", "メールアドレス", "ID番号", "注文番号"];
-    if (invalidNames.includes(name)) {
-        alert("サービス名にはサイト名やサービス名を入力してください（例：Amazon / auなど）");
-        return;
-    }
+
     if (!name || !value || !selectedIcon) {
         alert("入力が不足しています");
         return;
@@ -135,16 +151,11 @@ function showPassword(service) {
     currentService = service;
 
     document.getElementById("modal-title").textContent = service.name;
-
-    // 種類に応じてラベルを変える
-    const label = service.type ? service.type : "内容";
-
     document.getElementById("modal-pass").textContent =
-        service.pass ? `${label}：${service.pass}` : `${label}が登録されていません`;
+        service.pass ? `パスワード：${service.pass}` : "パスワードが登録されていません";
 
     document.getElementById("password-modal").style.display = "block";
 }
-
 
 document.getElementById("modal-close").onclick = () => {
     document.getElementById("password-modal").style.display = "none";
@@ -171,7 +182,7 @@ document.getElementById("save-pass-btn").addEventListener("click", () => {
 
 const typeSelect = document.getElementById("new-service-type");
 const valueInput = document.getElementById("new-service-value");
-const nameInput = document.getElementById("new-service-name");
+
 typeSelect.addEventListener("change", () => {
     const type = typeSelect.value;
 
@@ -184,9 +195,6 @@ typeSelect.addEventListener("change", () => {
     };
 
     valueInput.placeholder = placeholders[type];
-   //サービス名の説明を固定（誤入力防止）
-   nameInput.placeholder = "サービス名（例：Amazon / au / mont-bellなど）";
-
 });
 
 /* ============================================
@@ -199,26 +207,48 @@ document.getElementById("add-service-open-btn").addEventListener("click", () => 
 document.getElementById("add-service-close").addEventListener("click", () => {
     document.getElementById("add-service-modal").style.display = "none";
 });
+
 document.getElementById("reset-add-form-btn").addEventListener("click", () => {
-    const nameInput = document.getElementById("new-service-name");
-    const valueInput = document.getElementById("new-service-value");
-    const typeSelect = document.getElementById("new-service-type");
+    // テキスト入力をクリア
+    document.getElementById("new-service-name").value = "";
+    document.getElementById("new-service-value").value = "";
 
-    // 入力欄を確実にリセット
-    nameInput.value = "";
-    valueInput.value = "";
-    valueInput.value = ""; // ← スマホ対策（内部値が残るバグ対策）
-    typeSelect.selectedIndex = 0;
+    // 種類を初期状態に戻す
+    document.getElementById("new-service-type").selectedIndex = 0;
 
-    // アイコン選択解除
+    // アイコン選択を解除
     selectedIcon = null;
     document.querySelectorAll(".icon-choice").forEach(i => i.classList.remove("selected"));
-
-    // スマホでフォーカスが残ると内部値が残るため、強制解除
-    document.activeElement.blur();
 });
 
 /* ============================================
    初期描画
 ============================================ */
 renderCards();
+function createBubbles(areaSelector, count) {
+    const area = document.querySelector(areaSelector);
+
+    for (let i = 0; i < count; i++) {
+        const bubble = document.createElement("div");
+        bubble.classList.add("bubble");
+
+        const size = Math.random() * 400 + 200;
+        bubble.style.width = `${size}px`;
+        bubble.style.height = `${size}px`;
+
+        const posX = Math.random() * 90; // ★安全範囲
+        bubble.style.left = `${posX}%`;
+
+        const duration = Math.random() * 12 + 18;
+        bubble.style.animationDuration = `${duration}s`;
+
+        const delay = Math.random() * 8;
+        bubble.style.animationDelay = `${delay}s`;
+
+        area.appendChild(bubble);
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    createBubbles(".bubble-area", 18);
+});
