@@ -19,37 +19,139 @@ a {
 /* ============================================
    全体レイアウト（Apple風）
 ============================================ */
-body {
+/* ============================
+   白背景（Secure Notes）
+============================ */
+html, body {
     margin: 0;
     padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: #d0e3ff; /* Appleの薄いグレー */
-    color: #333;
+    height: 100%;
+    overflow: hidden; /* ★上下左右スクロール完全封印 */
+    background: #007aff;
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", sans-serif;
 }
 
-.app-title {
-    text-align: center;
-    font-family: 'Inter', sans-serif;
-    font-size: 1.6em;
-    font-weight: 600;
-    color: #222;
-    margin-top: 28px;
-    margin-bottom: 14px;
-    letter-spacing: 0.5px;
+
+/* ============================
+   シャボン玉背景エリア
+============================ */
+.bubble-area {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
 }
 
 /* ============================
-   サブタイトル（説明文）
+   ブルー系シャボン玉（白背景用）
 ============================ */
+/* ============================
+   ブルー系シャボン玉（もっと濃く）
+============================ */
+.bubble {
+    position: absolute;
+    bottom: 0;
+
+    /* ★白背景でも映える濃いブルー光 */
+    background: radial-gradient(
+        circle at 30% 30%,
+        rgba(60, 120, 255, 0.90),   /* 中心：濃いブルーの強い光 */
+        rgba(150, 190, 255, 0.25)   /* 外側：淡いブルーの光（濃さを自然に見せる） */
+    );
+
+    border-radius: 50%;
+    border: 1px solid #ffffff;
+    animation: rise 26s infinite ease-in-out;
+    opacity: 0.85; /* ★濃さを強調するため少し上げる */
+}
+
+
+/* ============================
+   シャボン玉の動き
+============================ */
+@keyframes rise {
+    0% {
+        transform: translateY(200px) scale(1);
+        opacity: 0.0;
+    }
+    10% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(-900px) scale(1.2);
+        opacity: 0;
+    }
+}
+
+/* ============================
+   UIを前面に出す
+============================ */
+.app-title,
+.app-subtitle,
+.app-header,
+main,
+.modal {
+    position: relative;
+    z-index: 10;
+}
+
+/* ============================
+   モーダル
+============================ */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0; /* top:0; right:0; bottom:0; left:0 と同じ */
+    z-index: 20;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(4px);
+
+    /* ★中央寄せ（margin を使わない） */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #fff;
+    margin: 0; /* ★スクロール防止のため margin を完全に消す */
+    padding: 20px;
+    width: 80%;
+    max-width: 400px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+
+.modal-close {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+}
+.app-title {
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.55em;
+    font-weight: 600;
+    color: #ffffff;
+    margin-top: 32px;
+    margin-bottom: 8px;
+    letter-spacing: 0.04em;
+}
+
 .app-subtitle {
     text-align: center;
     font-family: 'Inter', sans-serif;
-    font-size: 0.95em;
-    color: #555;               /* ← 柔らかいグレー */
-    margin-top: -4px;          /* ← タイトルとの距離を詰める */
-    margin-bottom: 22px;       /* ← ボタンとの余白を広く */
-    letter-spacing: 0.3px;
+    font-size: 1em;
+    font-weight: 400;
+    color: rgba(255,255,255,0.85);
+    margin-top: 4px;
+    margin-bottom: 28px;
+    letter-spacing: 0.02em;
+    line-height: 1.6;
 }
+
 /* ============================================
    ヘッダー（中央縦並びボタン）
 ============================================ */
@@ -57,38 +159,45 @@ body {
     display: flex;
     justify-content: center;
     padding: 40px 0;
-    maegin-top: 30px;
 }
 
 .header-buttons-vertical {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    min-height: 45vh;
     gap: 20px;                /* ボタン間の余白 */
 }
 
 /* Apple風ボタン共通 */
 .header-buttons-vertical button {
-    width: 240px;
-    padding: 14px 0;
-    border-radius: 14px;
+    width: 250px;
+    padding: 20px 0;
+    border-radius: 22px;
     border: none;
-    font-size: 1.1em;
+    font-size: 1.15em;
     font-weight: 600;
     cursor: pointer;
-    transition: 0.2s ease;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+    transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.10);
 }
 
-/* 追加（Appleグリーン） */
 #add-service-open-btn {
-    background: #34c759;
+    background: #007aff;
     color: #fff;
+    border-radius: 14px;
+    padding: 12px 14px;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 15.5px;
+    letter-spacing: 0.04em;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.28);
+    display: block;
+    margin: 0 auto;
 }
+
 #add-service-open-btn:hover {
-    background: #28a745;
+    background: #005ecb;
     transform: translateY(-4px);
     box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
@@ -97,7 +206,18 @@ body {
 #edit-mode-btn {
     background: #007aff;
     color: #fff;
+    border-radius: 14px;
+    padding: 12px 14px;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 15.5px;
+    letter-spacing: 0.04em;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.28);
+    display: block;
+    margin: 0 auto;
 }
+
 #edit-mode-btn:hover {
     background: #005ecb;
     transform: translateY(-3px);
@@ -133,17 +253,21 @@ body {
    Apple風カードデザイン（高級感アップ）
 ============================================ */
 .service-card {
-    width: 200px;
-    padding: 22px;
-    border-radius: 24px;
-    background: #ffffff;
-    position: relative;
+    background: rgba(255, 255, 255, 0.15); /* 半透明ガラス */
+    backdrop-filter: blur(18px) saturate(180%);
+    -webkit-backdrop-filter: blur(18px) saturate(180%);
+
+    border-radius: 18px;
+    padding: 18px;
+    margin: 12px 0;
+
     box-shadow:
-        0 6px 18px rgba(0,0,0,0.10),
-        0 2px 6px rgba(0,0,0,0.06);
-    text-align: center;
-    cursor: pointer;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+        0 8px 24px rgba(0,0,0,0.12),
+        0 3px 8px rgba(0,0,0,0.08);
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
 }
 
 .service-card:hover {
@@ -154,21 +278,16 @@ body {
 }
 
 .service-card img {
-    width: 100%;
-    height: 130px;
-    object-fit: contain;
-    border-radius: 18px;
-    background: #fafafa;
-    padding: 10px;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px; /* ガラスカードと馴染む */
 }
 
-/* タイトル */
-.service-card h3 {
-    margin-top: 14px;
-    font-size: 1.15em;
-    font-weight: 600;
-    color: #222;
-    letter-spacing: 0.5px;
+.service-card h3,
+.service-card p {
+    color: rgba(255,255,255,0.92);
+    font-weight: 500;
+    letter-spacing: 0.02em;
 }
 
 /* ============================================
@@ -203,17 +322,45 @@ body {
 }
 
 .modal-content {
-    background: #fff;
+    background: rgba(255, 255, 255, 0.15); /* 半透明の白ガラス */
+    backdrop-filter: blur(18px) saturate(180%); /* リキッド感の核心 */
+    -webkit-backdrop-filter: blur(18px) saturate(180%); /* iOS対応 */
+
     margin: 140px auto;
     padding: 28px;
     width: 90%;
     max-width: 380px;
-    border-radius: 22px;
+
+    border-radius: 22px; /* 今の丸みのままでOK */
     box-shadow:
         0 12px 32px rgba(0,0,0,0.15),
         0 4px 10px rgba(0,0,0,0.08);
+
     animation: modalFadeIn 0.3s ease;
 }
+
+.modal-content h2 {
+    color: rgba(255,255,255,0.95);
+    font-weight: 600;
+    letter-spacing: 0.03em;
+}
+
+.modal-content p {
+    color: rgba(255,255,255,0.88);
+    font-weight: 500;
+    margin-top: 12px;
+}
+
+#edit-pass-input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: #fff;
+    font-size: 15px;
+}
+
 
 @keyframes modalFadeIn {
     from { opacity: 0; transform: translateY(20px); }
@@ -287,7 +434,7 @@ body {
 #add-service-btn,
 #add-category-btn,
 #save-pass-btn,
-#edit-pass-btn,
+#edit-pass-btn, 
 #reset-add-form-btn {
     width: 100%;
     padding: 12px;
@@ -311,8 +458,9 @@ body {
 }
 
 #reset-add-form-btn {
-    background: #9e9e9e;
+    background: #9e9e9e; /* Apple風の赤 */
 }
+
 /* ============================
    スマホ（〜599px）
    ボタンを画面幅いっぱいに
@@ -355,20 +503,5 @@ body {
         padding: 16px 0;
         border-radius: 18px;
         font-size: 1.05em;
-    }
-}
-/* ============================
-   スマホ横向き（〜900px）
-   → 縦向きと同じく 90% に広げる
-============================ */
-@media (orientation: landscape) and (max-width: 900px) {
-    .header-buttons-vertical button,
-    #add-service-open-btn,
-    #edit-mode-btn {
-        width: 90%;
-        max-width: 350px;
-        padding: 18px 0;
-        border-radius: 20px;
-        font-size: 1.1em;
     }
 }
