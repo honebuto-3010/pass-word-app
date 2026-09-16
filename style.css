@@ -45,6 +45,26 @@ body {
     z-index: 0;
     overflow: hidden;
     pointer-events: none;
+    background:
+    /* ドット（濃い青）＝ノード（接続点） */
+    radial-gradient(circle, rgba(255, 255, 255,0.15) 2px, transparent 1px),
+
+    /* 横線（白）＝構造の主線 */
+    linear-gradient(rgba(255,255,255,0.22) 1px, transparent 1px),
+    /* 横線（白・薄）＝副線 */
+    linear-gradient(rgba(255,255,255,0.10) 2px, transparent 2px),
+
+    /* 縦線（白）＝構造の主線 */
+    linear-gradient(90deg, rgba(255,255,255,0.22) 1px, transparent 1px),
+    /* 縦線（白・薄）＝副線 */
+    linear-gradient(90deg, rgba(255,255,255,0.10) 2px, transparent 2px),
+
+    /* オレンジ背景 */
+    #007aff;
+
+  background-size:
+    24px 24px, /* ドット */
+    24px 24px; /* 方眼 */
 }
 
 /* ============================
