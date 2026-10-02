@@ -1,47 +1,51 @@
 <!DOCTYPE html>
 <html lang="ja">
-    <head>
-        <meta charset="UTF-8">
-        <link rel="apple-touch-icon" sizes="180x180" href="new-secure-notes-icon3.png">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black">
-        <meta name="theme-color" content="#4a4a4a">
-        <meta name="description" content="たくさんあるパスワードを忘れないためにこういうものを作成してみました。">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="style.css">
-        <title>パスワード管理</title>
-        <link rel="manifest" href="manifest.json">
 
-    </head>
-    <body>
-        <div class="bubble-area"></div>
-      <h1 class="app-title">Secure Notes</h1>
-     
-    <!-- ============================
-         ヘッダー（中央縦並びボタン）
-    ============================ -->
-    <header class="app-header">
-        <div class="header-buttons-vertical">
-            <button id="add-service-open-btn">ADD</button>
-            <button id="edit-mode-btn">EDIT MODE</button>
+<head>
+    <meta charset="UTF-8">
+    <link rel="apple-touch-icon" sizes="180x180" href="new-se-icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="description" content="たくさんあるパスワードを忘れないためにこういうものを作成してみました。">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/theme-purple.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <title>パスワード管理</title>
+    <link rel="manifest" href="manifest.json">
+
+</head>
+
+<body class="home-page">
+
+    <!-- 背景バブル（画面全体） -->
+    <div class="bubble-background">
+        <div class="bubble-bg-circle circle1"></div>
+        <div class="bubble-bg-circle circle2"></div>
+        <div class="bubble-bg-circle circle3"></div>
+    </div>
+
+    <!-- 左下バブル（120pxの丸） -->
+    <div class="bubble-area">
+
+    </div>
+
+    <header class="top-header">
+        <div class="center-block">
+            <h1 class="app-title">Secure Notes</h1>
+            <button id="add-service-open-btn" class="header-btn">ADD</button>
         </div>
     </header>
 
 
-    <!-- ============================
-         カード一覧（カテゴリごと）
-    ============================ -->
     <main>
-        <div id="service-container" class="service-container">
-            <!-- JSでカテゴリ＋カードが描画される -->
-        </div>
+        <!-- トップページは登録専用なのでカード一覧は不要 -->
     </main>
 
 
-    <!-- ============================
-         サービス追加モーダル
-    ============================ -->
+    <!-- 登録モーダル -->
     <div id="add-service-modal" class="modal">
         <div class="modal-content">
             <span id="add-service-close" class="modal-close">&times;</span>
@@ -49,69 +53,77 @@
             <h2>サービスを追加する</h2>
 
             <input type="text" id="new-service-name" placeholder="サービス名">
+
             <select id="new-service-type">
-                <option value="パスワード">パスワード</option>
-                <option value="メールアドレス">メールアドレス</option>
-                <option value="ID番号">ID</option>
-                <option value="暗証番号">暗証番号</option>
-                <option value="注文番号">注文番号</option>
+                <option value="personal">個人情報</option>
+                <option value="email">メールアドレス</option>
+                <option value="passwords">パスワード</option>
+                <option value="others">その他</option>
             </select>
+
             <input type="text" id="new-service-value" placeholder="内容を入力">
 
-        
-            <!-- アイコンギャラリー -->
+            <!-- アイコン選択 -->
             <div class="icon-gallery">
-                <img src="kkrn_icon_cart_2-768x768.png" data-icon="kkrn_icon_cart_2-768x768.png" class="icon-choice">
-                <img src="kkrn_icon_creditcard_6-768x768.png" data-icon="kkrn_icon_creditcard_6-768x768.png" class="icon-choice">
-                <img src="kkrn_icon_mail_6-768x768.png" data-icon="kkrn_icon_mail_6-768x768.png" class="icon-choice">
-                <img src="kkrn_icon_notepc_1-768x768.png" data-icon="kkrn_icon_notepc_1-768x768.png" class="icon-choice">
-                <img src="kkrn_icon_security_11-768x768.png" data-icon="kkrn_icon_security_11-768x768.png" class="icon-choice">
-                <img src="kkrn_icon_user_1-768x768.png" data-icon="kkrn_icon_user_1-768x768.png" class="icon-choice">
-                <img src="kkrn_icon_wifi_11-768x768.png" data-icon="kkrn_icon_wifi_11-768x768.png" class="icon-choice">
-                <img src="kkrn_icon_smartphone_9-768x768.png" data-icon="kkrn_icon_smartphone_9-768x768.png" class="icon-choice">
+                <img src="images/kkrn_icon_user_1-768x768.png" data-icon="images/kkrn_icon_user_1-768x768.png"
+                    class="icon-choice">
+                <img src="images/kkrn_icon_mail_6-768x768.png" data-icon="images/kkrn_icon_mail_6-768x768.png"
+                    class="icon-choice">
+                <img src="images/kkrn_icon_security_11-768x768.png" data-icon="images/kkrn_icon_security_11-768x768.png"
+                    class="icon-choice">
+                <img src="images/kkrn_icon_notepc_1-768x768.png" data-icon="images/kkrn_icon_notepc_1-768x768.png"
+                    class="icon-choice">
             </div>
 
-            <button id="add-service-btn">登録する</button>
+            <button id="add-service-btn" class="primary">登録する</button>
             <button id="reset-add-form-btn" class="add-btn">入力をリセット</button>
-
         </div>
     </div>
 
+    <!-- 下部ナビゲーションバー（HOME active） -->
+    <footer class="nav-footer">
+        <nav class="bottom-nav">
 
-    <!-- ============================
-
-
-    <!-- ============================
-         パスワード表示モーダル
-    ============================ -->
-    <div id="password-modal" class="modal">
-        <div class="modal-content">
-            <span id="modal-close" class="modal-close">&times;</span>
-
-            <h2 id="modal-title"></h2>
-            <p id="modal-pass"></p>
-
-            <button id="edit-pass-btn">パスワードを編集する</button>
-
-            <div id="edit-form" style="display:none; margin-top:15px;">
-                <input type="text" id="edit-pass-input" placeholder="新しいパスワードを入力">
-                <button id="save-pass-btn">保存</button>
+            <!-- 個人情報 -->
+            <div class="nav-item" data-page="personal.html">
+                <img src="kkrn_icon_user_1-768x768.png" alt="Personal" class="nav-icon">
             </div>
-        </div>
-    </div>
- <footer class="app-footer">
-        <p class="app-subtitle">We keep all your important information<br> 
-            safe and organized.<br>🌿 &copy: Secure Notes -since 2026</p>
+
+            <!-- メール -->
+            <div class="nav-item" data-page="email.html">
+                <img src="kkrn_icon_mail_6-768x768.png" alt="Email" class="nav-icon">
+            </div>
+
+            <!-- パスワード -->
+            <div class="nav-item" data-page="passwords.html">
+                <img src="kkrn_icon_security_11-768x768.png" alt="Passwords" class="nav-icon">
+            </div>
+
+            <!-- その他 -->
+            <div class="nav-item" data-page="others.html">
+                <img src="kkrn_icon_notepc_1-768x768.png" alt="Others" class="nav-icon">
+            </div>
+
+        </nav>
     </footer>
 
+    <!-- JS -->
+    <script src="js/navigation.js"></script>
+    <script src="js/modal.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/app.js"></script>
+    <!-- render.js は閲覧ページ専用 -->
 
-        <script src="script.js"></script>
-        <script>
-                if ("serviceWorker" in navigator) {
-                  navigator.serviceWorker.register("./service-worker.js")
-                
-               }
-        </script>
 
-    </body>
+
+
+    <script>
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("./service-worker.js")
+
+        }
+    </script>
+
+</body>
+
 </html>
