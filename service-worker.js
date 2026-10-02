@@ -21,12 +21,12 @@ const ASSETS_TO_CACHE = [
   "./js/modal.js",
   "./js/storage.js",
   "./js/render.js",
-  "./images/kkrn_icon_user_1-768x768.png",
-  "./images/kkrn_icon_mail_6-768x768.png",
-  "./images/kkrn_icon_security_11-768x768.png",
-  "./images/kkrn_icon_notepc_1-768x768.png",
-  "./images/192-icon.png",
-  "./images/512-icon.png"
+  "./kkrn_icon_user_1-768x768.png",
+  "./kkrn_icon_mail_6-768x768.png",
+  "./kkrn_icon_security_11-768x768.png",
+  "./kkrn_icon_notepc_1-768x768.png",
+  "./192-icon.png",
+  "./512-icon.png"
 ];
 
 // インストール（初回起動時）
