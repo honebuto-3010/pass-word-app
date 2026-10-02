@@ -166,6 +166,13 @@ main {
         width: 90px;
         height: 90px;
     }
+    .nav-footer {
+        height: 80px;
+    }
+    .bottom-nav {
+        height: 80px;
+        align-items: center;
+    }
 }
 
 /* ============================
