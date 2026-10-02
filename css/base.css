@@ -575,3 +575,8 @@ main,
         max-width: 70%;
     }
 }
+@media (max-width: 599px) {
+    .bubble-bg-circle.circle1 { top: -20px; }
+    .bubble-bg-circle.circle2 { top: 120px; }
+    .bubble-bg-circle.circle3 { top: 220px; }
+}
