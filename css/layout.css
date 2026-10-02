@@ -1,0 +1,183 @@
+@charset "UTF-8";
+*,
+::before,
+::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+ul,
+li {
+    list-style: none;
+}
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* ============================
+   レイアウトの骨格（layout.css）
+   右端縦配置 / 左下バブル固定 / 下部ナビ固定
+============================ */
+
+/* 全体レイアウトの初期設定 */
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* ============================
+   左下バブル固定
+============================ */
+.bubble-area {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 120px;
+    height: 120px;
+    background: #bf52fe;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.bubble-bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle at 30% 30%,
+        rgba(175, 82, 222, 0.45),   /* Apple純正紫（濃い） */
+        rgba(175, 82, 222, 0.20)    /* Apple純正紫（薄い） */
+    );
+    border: 1px solid rgba(255, 255, 255, 0.35); /* ← 境界線で円がはっきりする */
+    filter: blur(0.5px); /* ← ぼかしを弱める */
+}
+
+/* トップページの中央縦配置 */
+
+/* 画面中央に配置するためのヘッダー */
+.home-page .top-header {
+    width: 100%;
+    height: 100vh;              /* ← 画面全体を使う */
+    display: flex;
+    justify-content: flex-end;    /* ← 横方向の中央 */
+    align-items: center;
+    padding-right: 20px;        /* ← 縦方向の中央（これが最重要） */
+}
+
+/* タイトル＋ボタンの縦並び */
+.home-page .center-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-right: 20px;
+    gap: 20px;                  /* タイトルとボタンの間隔 */
+}
+
+/* タイトル */
+.app-title {
+    margin: 0;
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* ボタン */
+.header-btn {
+    padding: 12px 20px;
+    border-radius: 14px;
+    font-size: 16px;
+    margin-left: auto;
+    margin-right: 0;/* ← 右端に余白を作る */
+}
+
+
+/* ============================
+   カード一覧
+============================ */
+main {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.service-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* ============================
+   下部ナビゲーションバー
+============================ */
+.nav-footer {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background: #ffffff;
+    border-top: 1px solid #ddd;
+    z-index: 10;
+}
+
+.bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 8px 0;
+}
+
+.nav-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
+}
+
+.nav-icon {
+    width: 32px;
+    height: 32px;
+    opacity: 0.85;
+    transition: opacity 0.2s;
+}
+
+.nav-icon:hover {
+    opacity: 1;
+}
+
+/* ============================
+   スマホ最適化
+============================ */
+@media (max-width: 480px) {
+    .app-title {
+        font-size: 22px;
+    }
+
+    .nav-icon {
+        width: 28px;
+        height: 28px;
+    }
+
+    .bubble-area {
+        width: 90px;
+        height: 90px;
+    }
+}
+
+/* ============================
+   タブレット最適化
+============================ */
+@media (min-width: 481px) and (max-width: 1024px) {
+    .app-title {
+        font-size: 26px;
+    }
+
+    .nav-icon {
+        width: 30px;
+        height: 30px;
+    }
+}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Addresses</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/theme-purple.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/modal.css">
+</head>
+
+<body>
+
+
+    <!-- 右端縦配置ヘッダー（閲覧専用なのでタイトルのみ） -->
+    <header class="top-header">
+        <div class="header-right-block">
+            <h1 class="app-title">Email Addresses</h1>
+        </div>
+    </header>
+
+    <!-- メールアドレスカード一覧 -->
+    <main>
+        <div id="email-list" class="service-container">
+            <!-- JS（render.js）でカードが描画される -->
+        </div>
+    </main>
+
+    <!-- 詳細モーダル（閲覧専用） -->
+    <div id="email-modal" class="modal">
+        <div class="modal-content">
+            <span id="modal-close" class="modal-close">&times;</span>
+
+            <h2 id="modal-title"></h2>
+            <p id="modal-value"></p>
+        </div>
+    </div>
+
+    <!-- 下部ナビゲーションバー -->
+    <footer class="nav-footer">
+        <nav class="bottom-nav">
+
+            <!-- HOME -->
+        <div class="nav-item" data-page="index.html">
+            <img src="images/kkrn_icon_home_1-768x768.png" alt="Home" class="nav-icon">
+        </div>
+
+            <!-- 個人情報 -->
+            <div class="nav-item" data-page="personal.html">
+                <img src="images/kkrn_icon_user_1-768x768.png" alt="Personal" class="nav-icon">
+            </div>
+
+            <!-- メール（現在のページ） -->
+            <div class="nav-item active" data-page="email.html">
+                <img src="images/kkrn_icon_mail_6-768x768.png" alt="Email" class="nav-icon">
+            </div>
+
+            <!-- ID / パスワード -->
+            <div class="nav-item" data-page="passwords.html">
+                <img src="images/kkrn_icon_security_11-768x768.png" alt="ID" class="nav-icon">
+            </div>
+
+            <!-- その他 -->
+            <div class="nav-item" data-page="others.html">
+                <img src="images/kkrn_icon_notepc_1-768x768.png" alt="Others" class="nav-icon">
+            </div>
+
+        </nav>
+    </footer>
+
+    <!-- JS -->
+<script src="js/navigation.js"></script>
+<script src="js/modal.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/render.js"></script>
+
+
+</body>
+</html>
