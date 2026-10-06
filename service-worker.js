@@ -26,6 +26,7 @@ const ASSETS_TO_CACHE = [
   "./kkrn_icon_mail_6-768x768.png",
   "./kkrn_icon_security_11-768x768.png",
   "./kkrn_icon_notepc_1-768x768.png",
+  "./istockphoto-2189137503-612x612jpg",
   "./192-icon.png",
   "./512-icon.png"
 ];
