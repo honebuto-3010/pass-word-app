@@ -32,56 +32,33 @@ body {
 }
 
 /* ============================
-   左下バブル固定
+   トップページだけ右寄せレイアウトを無効化
 ============================ */
-.bubble-area {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    width: 120px;
-    height: 120px;
-    background: #bf52fe;
-    border-radius: 50%;
-    z-index: 1;
-}
 
-.bubble-bg-circle {
-    position: absolute;
-    border-radius: 50%;
-    background: radial-gradient(
-        circle at 30% 30%,
-        rgba(175, 82, 222, 0.45),   /* Apple純正紫（濃い） */
-        rgba(175, 82, 222, 0.20)    /* Apple純正紫（薄い） */
-    );
-    border: 1px solid rgba(255, 255, 255, 0.35); /* ← 境界線で円がはっきりする */
-    filter: blur(0.5px); /* ← ぼかしを弱める */
-}
-
-/* トップページの中央縦配置 */
-
-/* 画面中央に配置するためのヘッダー */
+/* header を中央配置に戻す */
 .home-page .top-header {
-    width: 100%;
-    height: 100vh;              /* ← 画面全体を使う */
-    display: flex;
-    justify-content: flex-end;    /* ← 横方向の中央 */
-    align-items: center;
-    padding-right: 20px;        /* ← 縦方向の中央（これが最重要） */
+    height: 100vh !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 0 !important;
 }
 
-/* タイトル＋ボタンの縦並び */
+/* 中央縦並びに修正 */
 .home-page .center-block {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    margin-right: 20px;
-    gap: 20px;                  /* タイトルとボタンの間隔 */
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    margin-right: 0 !important;
+    gap: 24px !important;
 }
+
+
 
 /* タイトル */
 .app-title {
     margin: 0;
-    font-size: 28px;
+    font-size: 35px;
     font-weight: bold;
     text-align: center;
 }
@@ -92,9 +69,8 @@ body {
     border-radius: 14px;
     font-size: 16px;
     margin-left: auto;
-    margin-right: 0;/* ← 右端に余白を作る */
+    margin-right: 0;
 }
-
 
 /* ============================
    カード一覧
@@ -133,9 +109,11 @@ main {
 
 .nav-item {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 25%;
+    gap: 4px;
 }
 
 .nav-icon {
@@ -145,8 +123,21 @@ main {
     transition: opacity 0.2s;
 }
 
+/* ★ Appleブルーに統一 */
+.nav-label {
+    font-size: 12px;
+    color: #007aff;   /* ← 緑 → Appleブルーへ */
+    line-height: 1.2;
+    font-weight: bold;
+}
+
 .nav-icon:hover {
     opacity: 1;
+}
+
+/* active状態（今いるページ） */
+.nav-item.active {
+    display: none;
 }
 
 /* ============================
@@ -165,13 +156,6 @@ main {
     .bubble-area {
         width: 90px;
         height: 90px;
-    }
-    .nav-footer {
-        height: 80px;
-    }
-    .bottom-nav {
-        height: 80px;
-        align-items: center;
     }
 }
 
