@@ -19,7 +19,7 @@ a {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0, 122, 255, 0.25); /* ← Appleブルーのオーバーレイ */
     backdrop-filter: blur(4px);
     z-index: 20;
     justify-content: center;
@@ -32,4 +32,6 @@ a {
     border-radius: 12px;
     width: 80%;
     max-width: 400px;
+    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.25); /* ← Appleブルー影 */
+    border: 2px solid #bcd6ff; /* ← 淡い青枠（Apple風） */
 }
