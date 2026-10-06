@@ -33,25 +33,25 @@ button {
     transition: background 0.2s, transform 0.1s;
 }
 
-/* 追加ボタン・編集ボタン（紫テーマと統一） */
+/* 追加ボタン・編集ボタン（Appleブルー） */
 button.primary {
-    background: #8B5CF6;
+    background: #007aff;
     color: #fff;
-    box-shadow: 0 3px 6px rgba(120, 80, 200, 0.25);
+    box-shadow: 0 3px 6px rgba(0, 122, 255, 0.25);
 }
 
 button.primary:hover {
-    background: #7C4AEF;
+    background: #005ecb;
 }
 
 button.primary:active {
     transform: scale(0.96);
 }
 
-/* リセットボタンなどのサブボタン */
+/* リセットボタンなどのサブボタン（そのまま） */
 button.secondary {
     background: #EDE7FF;
-    color: #4A2E8A;
+    color: #007aff;
     border: 2px solid #C3B5FF;
 }
 
@@ -65,11 +65,11 @@ button.secondary:hover {
 .service-card {
     position: relative;
     background: #ffffff;
-    border-left: 6px solid #8B5CF6; /* 紫のアクセントライン */
+    border-left: 6px solid #007aff; /* Appleブルーアクセント */
     border-radius: 12px;
     padding: 16px;
     margin-bottom: 12px;
-    box-shadow: 0 3px 8px rgba(120, 80, 200, 0.15);
+    box-shadow: 0 3px 8px rgba(0, 122, 255, 0.15);
     display: flex;
     align-items: center;
     gap: 14px;
@@ -80,7 +80,7 @@ button.secondary:hover {
     width: 48px;
     height: 48px;
     border-radius: 10px;
-    background: #F0E8FF;
+    background: #007aff;
     padding: 6px;
 }
 
@@ -93,27 +93,28 @@ button.secondary:hover {
 
 .service-card .service-name {
     font-size: 16px;
-    font-weight: bold;
-    color: #4A2E8A;
+    font-weight: 600;
+    color: #333;
 }
 
 .service-card .service-value {
-    font-size: 14px;
-    color: #6A4ACF;
+    font-size: 18px;
+    font-weight: 500;
+    color: #111;
 }
 
 /* ----------------------------
    モーダル（共通）
 ---------------------------- */
 .modal {
-    display: none; /* JSで表示切替 */
+    display: none;
     position: fixed;
     z-index: 20;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background: rgba(40, 20, 80, 0.35); /* 紫系の薄いオーバーレイ */
+    background: rgba(0, 122, 255, 0.25); /* Appleブルーの薄いオーバーレイ */
 }
 
 .modal-content {
@@ -123,8 +124,8 @@ button.secondary:hover {
     border-radius: 12px;
     width: 85%;
     max-width: 420px;
-    box-shadow: 0 4px 12px rgba(100, 60, 180, 0.25);
-    border: 2px solid #C3B5FF;
+    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.25);
+    border: 2px solid #bcd6ff; /* 淡い青枠 */
 }
 
 /* モーダルの閉じるボタン */
@@ -132,7 +133,7 @@ button.secondary:hover {
     float: right;
     font-size: 24px;
     cursor: pointer;
-    color: #6A4ACF;
+    color: #007aff;
 }
 
 /* モーダル内の入力欄 */
@@ -143,16 +144,16 @@ button.secondary:hover {
     margin-bottom: 10px;
     padding: 10px;
     border-radius: 8px;
-    border: 2px solid #C3B5FF;
-    background: #FAF7FF;
+    border: 2px solid #bcd6ff;
+    background: #f5f9ff;
     font-size: 14px;
-    color: #4A2E8A;
+    color: #007aff;
 }
 
 .modal-content input:focus,
 .modal-content select:focus {
     outline: none;
-    border-color: #8B5CF6;
+    border-color: #007aff;
 }
 
 /* ----------------------------
@@ -169,21 +170,21 @@ button.secondary:hover {
     width: 58px;
     height: 58px;
     border-radius: 12px;
-    background: #F0E8FF;
+    background: #e8f1ff;
     padding: 8px;
     border: 2px solid transparent;
     transition: border 0.2s, transform 0.1s;
 }
 
 .icon-choice:hover {
-    border-color: #8B5CF6;
+    border-color: #007aff;
     transform: scale(1.05);
 }
 
 /* 選択されたアイコン */
 .icon-choice.selected {
-    border-color: #8B5CF6;
-    background: #EDE3FF;
+    border-color: #007aff;
+    background: #ffffff;
 }
 
 /* ----------------------------
@@ -195,11 +196,11 @@ button.secondary:hover {
 
 .nav-item.active .nav-icon {
     opacity: 1;
-    filter: drop-shadow(0 0 6px rgba(140, 100, 240, 0.45));
+    filter: drop-shadow(0 0 6px rgba(0, 122, 255, 0.45));
 }
 
 /* ============================
-   削除ボタン（×）
+   削除ボタン（×）※そのまま
 ============================ */
 .delete-btn {
     position: absolute;
@@ -226,14 +227,13 @@ button.secondary:hover {
     transition: 0.2s ease;
 }
 
-/* ホバー時（PC） */
 .delete-btn:hover {
     background-color: #ff4d4d;
     color: white;
 }
 
-/* スマホでのタップ時 */
 .delete-btn:active {
     background-color: #e60000;
     color: white;
 }
+
