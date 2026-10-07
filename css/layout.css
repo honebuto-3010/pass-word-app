@@ -140,6 +140,29 @@ main {
     display: none;
 }
 
+@media (max-width: 599px) {
+    .nav-footer {
+        position: fixed;
+        bottom: 24px;
+        left: 0;
+        right: 0;
+        width: 100%;
+        z-index: 100;
+    }
+
+    .bottom-nav {
+        padding: 6px 0;
+    }
+
+    .nav-item {
+        gap: 2px;
+    }
+
+    .nav-icon {
+        margin-bottom: 0;
+    }
+}
+
 /* ============================
    スマホ最適化
 ============================ */
