@@ -27,8 +27,8 @@ const ASSETS_TO_CACHE = [
   "./kkrn_icon_security_11-768x768.png",
   "./kkrn_icon_notepc_1-768x768.png",
   "./istockphoto-2189137503-612x612.jpg",
-  "./192-icon.png",
-  "./512-icon.png"
+  "./se-icon-192.png",
+  "./se-icon-512.png"
 ];
 
 // インストール（初回起動時）
