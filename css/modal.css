@@ -15,23 +15,47 @@ a {
     text-decoration: none;
 }
 
+/* ============================================
+   Apple風モーダル
+============================================ */
+
 .modal {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0, 122, 255, 0.25); /* ← Appleブルーのオーバーレイ */
+    background: rgba(0, 122, 255, 0.25);
     backdrop-filter: blur(4px);
-    z-index: 20;
     justify-content: center;
     align-items: center;
 }
 
 .modal-content {
-    background: #fff;
-    padding: 20px;
-    border-radius: 12px;
-    width: 80%;
-    max-width: 400px;
-    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.25); /* ← Appleブルー影 */
-    border: 2px solid #bcd6ff; /* ← 淡い青枠（Apple風） */
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(18px) saturate(180%);
+    margin: 140px auto;
+    padding: 28px;
+    width: 90%;
+    max-width: 380px;
+    border-radius: 22px;
+    box-shadow:
+        0 12px 32px rgba(0, 122, 255, 0.20),
+        0 4px 10px rgba(0, 122, 255, 0.12);
+    animation: modalFadeIn 0.3s ease;
 }
+
+.modal-content h2 {
+    color: rgba(255,255,255,0.95);
+    font-weight: 600;
+}
+
+.modal-content p {
+    color: rgba(255,255,255,0.88);
+    font-weight: 500;
+    margin-top: 12px;
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
