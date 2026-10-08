@@ -15,71 +15,82 @@ a {
     text-decoration: none;
 }
 
-/* ============================
-   components.css
-   カード / ボタン / モーダル / アイコン
-============================ */
+/* ============================================
+   Apple風 ボタン
+============================================ */
 
-/* ----------------------------
-   ボタン（共通）
----------------------------- */
 button {
     cursor: pointer;
-    font-family: inherit;
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
     border: none;
-    border-radius: 8px;
-    padding: 10px 16px;
-    font-size: 14px;
-    transition: background 0.2s, transform 0.1s;
+    border-radius: 14px; /* Apple角丸 */
+    padding: 12px 18px;
+    font-size: 15px;
+    font-weight: 600;
+    transition: background 0.25s ease, transform 0.15s ease, box-shadow 0.25s ease;
 }
 
 /* 追加ボタン・編集ボタン（Appleブルー） */
 button.primary {
     background: #007aff;
     color: #fff;
-    box-shadow: 0 3px 6px rgba(0, 122, 255, 0.25);
+    box-shadow: 0 6px 16px rgba(0, 122, 255, 0.25);
 }
 
 button.primary:hover {
     background: #005ecb;
+    transform: translateY(-3px);
 }
 
 button.primary:active {
     transform: scale(0.96);
 }
 
-/* リセットボタンなどのサブボタン（そのまま） */
+/* サブボタン（Appleグレー） */
 button.secondary {
-    background: #EDE7FF;
+    background: #f2f2f7;
     color: #007aff;
-    border: 2px solid #C3B5FF;
+    border: 2px solid #d0d0d5;
 }
 
 button.secondary:hover {
-    background: #E3DAFF;
+    background: #e5e5ea;
 }
 
-/* ----------------------------
-   カード（サービス一覧）
----------------------------- */
+/* ============================================
+   Apple風 サービスカード（一覧）
+============================================ */
+
 .service-card {
     position: relative;
-    background: #ffffff;
-    border-left: 6px solid #007aff; /* Appleブルーアクセント */
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 12px;
-    box-shadow: 0 3px 8px rgba(0, 122, 255, 0.15);
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(14px);
+    border-radius: 18px;
+    padding: 20px;
+    margin-bottom: 14px;
+
+    box-shadow:
+        0 12px 32px rgba(0,0,0,0.08),
+        0 4px 12px rgba(0,0,0,0.06);
+
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 18px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-4px);
+    box-shadow:
+        0 18px 40px rgba(0,0,0,0.10),
+        0 6px 16px rgba(0,0,0,0.08);
 }
 
 /* カード内のアイコン */
 .service-card img {
-    width: 48px;
-    height: 48px;
-    border-radius: 10px;
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
     background: #007aff;
     padding: 6px;
 }
@@ -88,50 +99,64 @@ button.secondary:hover {
 .service-card .service-info {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
 }
 
 .service-card .service-name {
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 600;
-    color: #333;
+    color: #1C1C1E; /* Apple黒 */
 }
 
 .service-card .service-value {
     font-size: 18px;
     font-weight: 500;
-    color: #111;
+    color: #8E8E93; /* Appleグレー */
 }
 
-/* ----------------------------
-   モーダル（共通）
----------------------------- */
+/* ============================================
+   Apple風 モーダル
+============================================ */
+
 .modal {
     display: none;
     position: fixed;
+    inset: 0;
     z-index: 20;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 122, 255, 0.25); /* Appleブルーの薄いオーバーレイ */
+
+    background: rgba(0, 122, 255, 0.25);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .modal-content {
-    background: #ffffff;
-    margin: 12% auto;
-    padding: 20px;
-    border-radius: 12px;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(18px) saturate(180%);
+    padding: 28px;
+    border-radius: 22px;
     width: 85%;
     max-width: 420px;
-    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.25);
-    border: 2px solid #bcd6ff; /* 淡い青枠 */
+
+    box-shadow:
+        0 20px 40px rgba(0,0,0,0.12),
+        0 6px 16px rgba(0,0,0,0.08);
+
+    animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
 /* モーダルの閉じるボタン */
 .modal-close {
     float: right;
-    font-size: 24px;
+    font-size: 26px;
     cursor: pointer;
     color: #007aff;
 }
@@ -140,68 +165,100 @@ button.secondary:hover {
 .modal-content input,
 .modal-content select {
     width: 100%;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 8px;
-    border: 2px solid #bcd6ff;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    padding: 12px;
+    border-radius: 14px;
+    border: 2px solid #d0e4ff;
     background: #f5f9ff;
-    font-size: 14px;
+    font-size: 15px;
     color: #007aff;
+    transition: border 0.2s ease, background 0.2s ease;
 }
 
 .modal-content input:focus,
 .modal-content select:focus {
     outline: none;
     border-color: #007aff;
+    background: #fff;
 }
 
-/* ----------------------------
-   アイコンギャラリー（4つ）
----------------------------- */
+/* ============================================
+   Apple風 アイコンギャラリー
+============================================ */
+
 .icon-gallery {
     display: flex;
     justify-content: space-between;
-    margin-top: 12px;
-    margin-bottom: 12px;
+    margin-top: 14px;
+    margin-bottom: 14px;
 }
 
 .icon-choice {
-    width: 58px;
-    height: 58px;
-    border-radius: 12px;
-    background: #e8f1ff;
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    background: #f2f2f7;
     padding: 8px;
     border: 2px solid transparent;
-    transition: border 0.2s, transform 0.1s;
+    transition: border 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 
 .icon-choice:hover {
     border-color: #007aff;
-    transform: scale(1.05);
+    transform: scale(1.08);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
 }
 
-/* 選択されたアイコン */
 .icon-choice.selected {
     border-color: #007aff;
     background: #ffffff;
 }
 
-/* ----------------------------
-   下部ナビゲーションバー（補助）
----------------------------- */
-.nav-item {
-    padding: 6px 0;
+/* ============================================
+   Apple風 一覧カード（summary-item）
+============================================ */
+
+.summary-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(12px);
+    border-radius: 18px;
+    padding: 18px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+    cursor: pointer;
+    transition: transform .25s, box-shadow .25s;
 }
 
-.nav-item.active .nav-icon {
-    opacity: 1;
-    filter: drop-shadow(0 0 6px rgba(0, 122, 255, 0.45));
+.summary-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgba(0,0,0,0.10);
 }
 
-/* ============================
-   削除ボタン（×）※そのまま
-============================ */
+.summary-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+}
+
+.summary-service {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1C1C1E;
+}
+
+.summary-hidden {
+    font-size: 16px;
+    color: #8E8E93;
+}
+
+/* ============================================
+   Apple風 削除ボタン（×）
+============================================ */
+
 .delete-btn {
     position: absolute;
     top: 8px;
@@ -210,86 +267,39 @@ button.secondary:hover {
     width: 28px;
     height: 28px;
 
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: #ff3b30;
+    color: white;
+
     border: none;
     border-radius: 50%;
-
     font-size: 18px;
-    font-weight: bold;
-    color: #555;
-
-    cursor: pointer;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
+    cursor: pointer;
     transition: 0.2s ease;
 }
 
 .delete-btn:hover {
     background-color: #ff4d4d;
-    color: white;
 }
 
 .delete-btn:active {
     background-color: #e60000;
-    color: white;
 }
 
-/* 一覧カード（メールアドレスは隠す） */
-.summary-item {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    background: #fff;
-    border-radius: 16px;
-    padding: 16px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-    cursor: pointer;
-    transition: transform .2s, box-shadow .2s;
-}
+/* ============================================
+   Apple風 詳細カード
+============================================ */
 
-.summary-item:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.10);
-}
-
-.summary-icon {
-    width: 40px;
-    height: 40px;
-}
-
-.summary-service {
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.summary-hidden {
-    font-size: 16px;
-    color: #666;
-}
-
-/* 詳細カード（既存の email-list を表示する領域） */
 .detail-card {
-    background: #fff;
-    border-radius: 20px;
-    padding: 24px;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(14px);
+    border-radius: 22px;
+    padding: 28px;
     margin-top: 20px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.10);
 }
 
-.back-btn {
-    background: #EDE7FF;
-    color: #5A4FCF;
-    border: 2px solid #C3B5FF;
-    padding: 10px 16px;
-    border-radius: 10px;
-    font-size: 15px;
-    margin-bottom: 12px;
-    cursor: pointer;
-}
-
-.back-btn:hover {
-    background: #E3DAFF;
-}
