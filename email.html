@@ -22,13 +22,24 @@
             <h1 class="app-title">メールアドレス</h1>
         </div>
     </header>
-
-    <!-- メールアドレスカード一覧 -->
+   <!-- メールアドレスカード一覧 -->
     <main>
-        <div id="email-list" class="service-container">
+
+        <!-- 一覧カード（メールアドレスは隠す） -->
+        <div id="email-summary-list" class="service-container">
+            <!-- JSで描画される -->
+        </div>
+
+        <!-- 詳細カード（既存の email-list を詳細ビューとして使う） -->
+        <div id="email-list" class="service-container" style="display:none;">
             <!-- JS（render.js）でカードが描画される -->
         </div>
+
+        <button id="email-back-btn" class="back-btn" style="display:none;">
+            ← 一覧へ戻る
+        </button>
     </main>
+
 
     <!-- 詳細モーダル（閲覧専用） -->
     <div id="email-modal" class="modal">
