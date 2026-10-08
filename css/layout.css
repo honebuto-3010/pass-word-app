@@ -79,6 +79,7 @@ main {
     flex: 1;
     padding: 20px;
     box-sizing: border-box;
+    over-flow-y: auto;
 }
 
 .service-container {
