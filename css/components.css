@@ -237,3 +237,59 @@ button.secondary:hover {
     color: white;
 }
 
+/* 一覧カード（メールアドレスは隠す） */
+.summary-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    cursor: pointer;
+    transition: transform .2s, box-shadow .2s;
+}
+
+.summary-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.10);
+}
+
+.summary-icon {
+    width: 40px;
+    height: 40px;
+}
+
+.summary-service {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.summary-hidden {
+    font-size: 16px;
+    color: #666;
+}
+
+/* 詳細カード（既存の email-list を表示する領域） */
+.detail-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 24px;
+    margin-top: 20px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.back-btn {
+    background: #EDE7FF;
+    color: #5A4FCF;
+    border: 2px solid #C3B5FF;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 15px;
+    margin-bottom: 12px;
+    cursor: pointer;
+}
+
+.back-btn:hover {
+    background: #E3DAFF;
+}
