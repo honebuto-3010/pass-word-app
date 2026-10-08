@@ -26,9 +26,19 @@
 
     <!-- 個人情報カード一覧 -->
     <main>
-        <div id="personal-list" class="service-container">
-            <!-- JS（render.js）でカードが描画される -->
-        </div>
+
+        <!-- 一覧カード（••••） -->
+        <div id="personal-summary-list" class="service-container"></div>
+
+
+        <!-- 詳細カード（既存の personal-list を詳細ビューとして使う） -->
+        <div id="personal-list" class="service-container" style="display:none;"></div>
+
+         <!-- 戻るボタン -->
+        <button id="personal-back-btn" class="back-btn" style="display:none;">
+            ← 一覧へ戻る
+        </button>
+
     </main>
 
     <!-- 詳細モーダル（閲覧専用） -->
