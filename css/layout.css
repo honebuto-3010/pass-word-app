@@ -79,13 +79,17 @@ main {
     flex: 1;
     padding: 20px;
     box-sizing: border-box;
-    overflow-y: auto;
+    height: calc(100vh - 80px);
+    overflow: hidden;
 }
 
 .service-container {
+    height: 100%;
+    overflow: auto;
     display: flex;
     flex-direction: column;
     gap: 15px;
+    padding-bottom: 20px;
 }
 
 /* ============================
