@@ -84,12 +84,27 @@ main {
 }
 
 .service-container {
-    height: 100%;
-    overflow: auto;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
     gap: 15px;
     padding-bottom: 20px;
+}
+
+.back-btn-wrapper {
+    margin-top: 20px;
+    margin-bottom: 100px; /* ← 下部ナビに埋もれないように余白 */
+}
+
+.back-btn {
+    position: fixed;
+    bottom: 70px; /* ← nav-footer の高さより少し上 */
+    left: 20px;
+    z-index: 100;
+    padding: 10px 16px;
+    border-radius: 10px;
+    background: #fff;
+    border: 1px solid #ddd;
 }
 
 /* ============================
