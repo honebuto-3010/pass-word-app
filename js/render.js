@@ -9,15 +9,20 @@ function renderEmailSummaryList(data) {
     data.forEach(item => {
         const div = document.createElement("div");
         div.className = "summary-item email-summary";
-        div.dataset.id = item.createdAt;
+        div.dataset.id = String(item.createdAt); // ★ 文字列化
 
         div.innerHTML = `
-            <img src="images/kkrn_icon_mail_6-768x768.png" class="summary-icon">
-            <div>
-                <div class="summary-service">${item.name}</div>
-                <div class="summary-hidden">••••••••</div>
+            <div class="summary-left">
+                <img src="images/kkrn_icon_mail_6-768x768.png" class="summary-icon">
+                <div>
+                    <div class="summary-service">${item.name}</div>
+                    <div class="summary-hidden">••••••••</div>
+                </div>
             </div>
+
+            <button class="delete-btn" data-id="${item.createdAt}">×</button>
         `;
+
         list.appendChild(div);
     });
 }
@@ -29,12 +34,11 @@ function renderEmailDetail(id) {
     const modal = document.getElementById("email-modal");
     const modalTitle = document.getElementById("modal-title");
     const modalValue = document.getElementById("modal-value");
-    const modalClose = document.getElementById("modal-close");
 
     const data = getItemsByCategory("email");
     container.innerHTML = "";
 
-    const item = data.find(x => x.createdAt == id);
+    const item = data.find(x => String(x.createdAt) === String(id)); // ★ 文字列比較
     if (!item) return;
 
     const card = document.createElement("div");
@@ -46,55 +50,72 @@ function renderEmailDetail(id) {
             <h3 class="service-name">${item.name}</h3>
             <p class="service-value">${item.value}</p>
         </div>
-        <button class="delete-btn" data-id="${item.createdAt}">×</button>
+        <button class="close-btn">×</button>
     `;
 
-    card.addEventListener("click", (e) => {
-        if (e.target.classList.contains("delete-btn")) return;
+    // 詳細カードの × → 閉じる（削除ではない）
+    const closeBtn = card.querySelector(".close-btn");
+    closeBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        container.style.display = "none";
+        document.getElementById("email-summary-list").style.display = "block";
+        modal.style.display = "none";
+    });
+
+    // カード本体を押すとモーダル表示
+    card.addEventListener("click", () => {
         modalTitle.textContent = item.name;
         modalValue.textContent = item.value;
         modal.style.display = "block";
     });
 
-    const deleteBtn = card.querySelector(".delete-btn");
-    deleteBtn.addEventListener("click", () => {
-        if (confirm("削除しますか？")) {
-            deleteItem(item.createdAt);
-            container.style.display = "none";
-            document.getElementById("email-summary-list").style.display = "block";
-            renderEmailSummaryList(getItemsByCategory("email"));
-        }
-    });
-
     container.appendChild(card);
-    modalClose.addEventListener("click", () => modal.style.display = "none");
 }
 
+/* ============================
+   一覧側のイベント（削除 & 詳細）
+============================ */
 const emailSummary = document.getElementById("email-summary-list");
 if (emailSummary) {
     emailSummary.addEventListener("click", function(e) {
+
+        // 一覧の × → 完全削除
+        if (e.target.classList.contains("delete-btn")) {
+            e.stopPropagation(); // ★ 詳細へ飛ぶのを防止
+            const id = String(e.target.dataset.id);
+
+            if (confirm("削除しますか？")) {
+                deleteItem(id); // ★ 完全削除
+                renderEmailSummaryList(getItemsByCategory("email"));
+            }
+            return;
+        }
+
+        // 一覧カードを押す → 詳細へ
         const item = e.target.closest(".email-summary");
         if (!item) return;
 
         const id = item.dataset.id;
         emailSummary.style.display = "none";
         document.getElementById("email-list").style.display = "block";
-        document.getElementById("email-back-btn").style.display = "block";
 
         renderEmailDetail(id);
     });
 }
 
-const emailBack = document.getElementById("email-back-btn");
-if (emailBack) {
-    emailBack.addEventListener("click", () => {
-        document.getElementById("email-list").style.display = "none";
-        document.getElementById("email-summary-list").style.display = "block";
-        emailBack.style.display = "none";
-    });
-}
-
+/* ============================
+   初期表示
+============================ */
 document.addEventListener("DOMContentLoaded", () => {
+
+    const modalClose = document.getElementById("modal-close");
+    if (modalClose) {
+        modalClose.addEventListener("click", () => {
+            const modal = document.getElementById("email-modal");
+            modal.style.display = "none";
+        });
+    }
+
     if (document.getElementById("email-summary-list")) {
         renderEmailSummaryList(getItemsByCategory("email"));
     }
@@ -104,23 +125,30 @@ document.addEventListener("DOMContentLoaded", () => {
 /* ============================
    PERSONAL
 ============================ */
-function renderPersonalSummaryList(data) {
+function renderPersonalSummaryList() {
     const list = document.getElementById("personal-summary-list");
     if (!list) return;
+
+    const data = getItemsByCategory("personal");
     list.innerHTML = "";
 
     data.forEach(item => {
         const div = document.createElement("div");
         div.className = "summary-item personal-summary";
-        div.dataset.id = item.createdAt;
+        div.dataset.id = String(item.createdAt);
 
         div.innerHTML = `
-            <img src="images/kkrn_icon_user_1-768x768.png" class="summary-icon">
-            <div>
-                <div class="summary-service">${item.name}</div>
-                <div class="summary-hidden">••••••••</div>
+            <div class="summary-left">
+                <img src="${item.icon}" class="summary-icon">
+                <div>
+                    <div class="summary-service">${item.name}</div>
+                    <div class="summary-hidden">••••••••</div>
+                </div>
             </div>
+
+            <button class="delete-btn" data-id="${item.createdAt}">×</button>
         `;
+
         list.appendChild(div);
     });
 }
@@ -130,14 +158,13 @@ function renderPersonalDetail(id) {
     if (!container) return;
 
     const modal = document.getElementById("personal-modal");
-    const modalTitle = document.getElementById("modal-title");
-    const modalValue = document.getElementById("modal-value");
-    const modalClose = document.getElementById("modal-close");
+    const modalTitle = document.getElementById("personal-modal-title");
+    const modalValue = document.getElementById("personal-modal-value");
 
     const data = getItemsByCategory("personal");
     container.innerHTML = "";
 
-    const item = data.find(x => x.createdAt == id);
+    const item = data.find(x => String(x.createdAt) === String(id));
     if (!item) return;
 
     const card = document.createElement("div");
@@ -149,83 +176,104 @@ function renderPersonalDetail(id) {
             <h3 class="service-name">${item.name}</h3>
             <p class="service-value">${item.value}</p>
         </div>
-        <button class="delete-btn" data-id="${item.createdAt}">×</button>
+        <button class="close-btn">×</button>
     `;
 
-    card.addEventListener("click", (e) => {
-        if (e.target.classList.contains("delete-btn")) return;
+    // 閉じる専用
+    const closeBtn = card.querySelector(".close-btn");
+    closeBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        container.style.display = "none";
+        document.getElementById("personal-summary-list").style.display = "block";
+        modal.style.display = "none";
+    });
+
+    // モーダル表示
+    card.addEventListener("click", () => {
         modalTitle.textContent = item.name;
         modalValue.textContent = item.value;
         modal.style.display = "block";
     });
 
-    const deleteBtn = card.querySelector(".delete-btn");
-    deleteBtn.addEventListener("click", () => {
-        if (confirm("削除しますか？")) {
-            deleteItem(item.createdAt);
-            container.style.display = "none";
-            document.getElementById("personal-summary-list").style.display = "block";
-            renderPersonalSummaryList(getItemsByCategory("personal"));
-        }
-    });
-
     container.appendChild(card);
-    modalClose.addEventListener("click", () => modal.style.display = "none");
 }
 
+/* ============================
+   一覧側のイベント（削除 & 詳細）
+============================ */
 const personalSummary = document.getElementById("personal-summary-list");
 if (personalSummary) {
     personalSummary.addEventListener("click", function(e) {
+
+        // 削除
+        if (e.target.classList.contains("delete-btn")) {
+            e.stopPropagation();
+            const id = String(e.target.dataset.id);
+
+            if (confirm("削除しますか？")) {
+                deleteItem(id);
+                renderPersonalSummaryList();
+            }
+            return;
+        }
+
+        // 詳細へ
         const item = e.target.closest(".personal-summary");
         if (!item) return;
 
         const id = item.dataset.id;
         personalSummary.style.display = "none";
         document.getElementById("personal-list").style.display = "block";
-        document.getElementById("personal-back-btn").style.display = "block";
 
         renderPersonalDetail(id);
     });
 }
 
-const personalBack = document.getElementById("personal-back-btn");
-if (personalBack) {
-    personalBack.addEventListener("click", () => {
-        document.getElementById("personal-list").style.display = "none";
-        document.getElementById("personal-summary-list").style.display = "block";
-        personalBack.style.display = "none";
-    });
-}
-
+/* ============================
+   初期表示
+============================ */
 document.addEventListener("DOMContentLoaded", () => {
+
+    const modalClose = document.getElementById("personal-modal-close");
+    if (modalClose) {
+        modalClose.addEventListener("click", () => {
+            const modal = document.getElementById("personal-modal");
+            modal.style.display = "none";
+        });
+    }
+
     if (document.getElementById("personal-summary-list")) {
-        document.getElementById("personal-list").style.display = "none";
-        document.getElementById("personal-back-btn").style.display = "none";
-        renderPersonalSummaryList(getItemsByCategory("personal"));
+        renderPersonalSummaryList();
     }
 });
-
 
 /* ============================
    PASSWORDS
 ============================ */
-function renderPasswordsSummaryList(data) {
+function renderPasswordsSummaryList() {
     const list = document.getElementById("passwords-summary-list");
     if (!list) return;
+
+    const data = getItemsByCategory("passwords");
     list.innerHTML = "";
 
     data.forEach(item => {
         const div = document.createElement("div");
         div.className = "summary-item passwords-summary";
-        div.dataset.id = item.createdAt;
+        div.dataset.id = String(item.createdAt);
 
         div.innerHTML = `
-            <img src="images/kkrn_icon_security_11-768x768.png" class="summary-icon">
-            <div>
-                <div class="summary-service">${item.name}</div>
-                <div class="summary-hidden">••••••••</div>
+            <div class="summary-left">
+                <img src="${item.icon}" class="summary-icon">
+                <div>
+                    <div class="summary-service">${item.name}</div>
+                    <div class="summary-hidden">••••••••</div>
+                </div>
             </div>
+
+            <button class="delete-btn" data-id="${item.createdAt}">×</button>
         `;
+
         list.appendChild(div);
     });
 }
@@ -235,14 +283,13 @@ function renderPasswordsDetail(id) {
     if (!container) return;
 
     const modal = document.getElementById("passwords-modal");
-    const modalTitle = document.getElementById("modal-title");
-    const modalValue = document.getElementById("modal-value");
-    const modalClose = document.getElementById("modal-close");
+    const modalTitle = document.getElementById("passwords-modal-title");
+    const modalValue = document.getElementById("passwords-modal-value");
 
     const data = getItemsByCategory("passwords");
     container.innerHTML = "";
 
-    const item = data.find(x => x.createdAt == id);
+    const item = data.find(x => String(x.createdAt) === String(id));
     if (!item) return;
 
     const card = document.createElement("div");
@@ -254,83 +301,104 @@ function renderPasswordsDetail(id) {
             <h3 class="service-name">${item.name}</h3>
             <p class="service-value">${item.value}</p>
         </div>
-        <button class="delete-btn" data-id="${item.createdAt}">×</button>
+        <button class="close-btn">×</button>
     `;
 
-    card.addEventListener("click", (e) => {
-        if (e.target.classList.contains("delete-btn")) return;
+    // 閉じる専用
+    const closeBtn = card.querySelector(".close-btn");
+    closeBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        container.style.display = "none";
+        document.getElementById("passwords-summary-list").style.display = "block";
+        modal.style.display = "none";
+    });
+
+    // モーダル表示
+    card.addEventListener("click", () => {
         modalTitle.textContent = item.name;
         modalValue.textContent = item.value;
         modal.style.display = "block";
     });
 
-    const deleteBtn = card.querySelector(".delete-btn");
-    deleteBtn.addEventListener("click", () => {
-        if (confirm("削除しますか？")) {
-            deleteItem(item.createdAt);
-            container.style.display = "none";
-            document.getElementById("passwords-summary-list").style.display = "block";
-            renderPasswordsSummaryList(getItemsByCategory("passwords"));
-        }
-    });
-
     container.appendChild(card);
-    modalClose.addEventListener("click", () => modal.style.display = "none");
 }
 
+/* ============================
+   一覧側のイベント（削除 & 詳細）
+============================ */
 const passwordsSummary = document.getElementById("passwords-summary-list");
 if (passwordsSummary) {
     passwordsSummary.addEventListener("click", function(e) {
+
+        // 削除
+        if (e.target.classList.contains("delete-btn")) {
+            e.stopPropagation();
+            const id = String(e.target.dataset.id);
+
+            if (confirm("削除しますか？")) {
+                deleteItem(id);
+                renderPasswordsSummaryList();
+            }
+            return;
+        }
+
+        // 詳細へ
         const item = e.target.closest(".passwords-summary");
         if (!item) return;
 
         const id = item.dataset.id;
         passwordsSummary.style.display = "none";
         document.getElementById("passwords-list").style.display = "block";
-        document.getElementById("passwords-back-btn").style.display = "block";
 
         renderPasswordsDetail(id);
     });
 }
 
-const passwordsBack = document.getElementById("passwords-back-btn");
-if (passwordsBack) {
-    passwordsBack.addEventListener("click", () => {
-        document.getElementById("passwords-list").style.display = "none";
-        document.getElementById("passwords-summary-list").style.display = "block";
-        passwordsBack.style.display = "none";
-    });
-}
-
+/* ============================
+   初期表示
+============================ */
 document.addEventListener("DOMContentLoaded", () => {
+
+    const modalClose = document.getElementById("passwords-modal-close");
+    if (modalClose) {
+        modalClose.addEventListener("click", () => {
+            const modal = document.getElementById("passwords-modal");
+            modal.style.display = "none";
+        });
+    }
+
     if (document.getElementById("passwords-summary-list")) {
-        document.getElementById("passwords-list").style.display = "none";
-        document.getElementById("passwords-back-btn").style.display = "none";
-        renderPasswordsSummaryList(getItemsByCategory("passwords"));
+        renderPasswordsSummaryList();
     }
 });
-
 
 /* ============================
    OTHERS
 ============================ */
-function renderOthersSummaryList(data) {
+function renderOthersSummaryList() {
     const list = document.getElementById("others-summary-list");
     if (!list) return;
+
+    const data = getItemsByCategory("others");
     list.innerHTML = "";
 
     data.forEach(item => {
         const div = document.createElement("div");
         div.className = "summary-item others-summary";
-        div.dataset.id = item.createdAt;
+        div.dataset.id = String(item.createdAt);
 
         div.innerHTML = `
-            <img src="images/kkrn_icon_notepc_1-768x768.png" class="summary-icon">
-            <div>
-                <div class="summary-service">${item.name}</div>
-                <div class="summary-hidden">••••••••</div>
+            <div class="summary-left">
+                <img src="${item.icon}" class="summary-icon">
+                <div>
+                    <div class="summary-service">${item.name}</div>
+                    <div class="summary-hidden">••••••••</div>
+                </div>
             </div>
+
+            <button class="delete-btn" data-id="${item.createdAt}">×</button>
         `;
+
         list.appendChild(div);
     });
 }
@@ -340,14 +408,13 @@ function renderOthersDetail(id) {
     if (!container) return;
 
     const modal = document.getElementById("others-modal");
-    const modalTitle = document.getElementById("modal-title");
-    const modalValue = document.getElementById("modal-value");
-    const modalClose = document.getElementById("modal-close");
+    const modalTitle = document.getElementById("others-modal-title");
+    const modalValue = document.getElementById("others-modal-value");
 
     const data = getItemsByCategory("others");
     container.innerHTML = "";
 
-    const item = data.find(x => x.createdAt == id);
+    const item = data.find(x => String(x.createdAt) === String(id));
     if (!item) return;
 
     const card = document.createElement("div");
@@ -359,58 +426,73 @@ function renderOthersDetail(id) {
             <h3 class="service-name">${item.name}</h3>
             <p class="service-value">${item.value}</p>
         </div>
-        <button class="delete-btn" data-id="${item.createdAt}">×</button>
+        <button class="close-btn">×</button>
     `;
 
-    card.addEventListener("click", (e) => {
-        if (e.target.classList.contains("delete-btn")) return;
+    // 閉じる専用
+    const closeBtn = card.querySelector(".close-btn");
+    closeBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        container.style.display = "none";
+        document.getElementById("others-summary-list").style.display = "block";
+        modal.style.display = "none";
+    });
+
+    // モーダル表示
+    card.addEventListener("click", () => {
         modalTitle.textContent = item.name;
         modalValue.textContent = item.value;
         modal.style.display = "block";
     });
 
-    const deleteBtn = card.querySelector(".delete-btn");
-    deleteBtn.addEventListener("click", () => {
-        if (confirm("削除しますか？")) {
-            deleteItem(item.createdAt);
-            container.style.display = "none";
-            document.getElementById("others-summary-list").style.display = "block";
-            renderOthersSummaryList(getItemsByCategory("others"));
-        }
-    });
-
     container.appendChild(card);
-    modalClose.addEventListener("click", () => modal.style.display = "none");
 }
 
+/* ============================
+   一覧側のイベント（削除 & 詳細）
+============================ */
 const othersSummary = document.getElementById("others-summary-list");
 if (othersSummary) {
     othersSummary.addEventListener("click", function(e) {
+
+        // 削除
+        if (e.target.classList.contains("delete-btn")) {
+            e.stopPropagation();
+            const id = String(e.target.dataset.id);
+
+            if (confirm("削除しますか？")) {
+                deleteItem(id);
+                renderOthersSummaryList();
+            }
+            return;
+        }
+
+        // 詳細へ
         const item = e.target.closest(".others-summary");
         if (!item) return;
 
         const id = item.dataset.id;
         othersSummary.style.display = "none";
         document.getElementById("others-list").style.display = "block";
-        document.getElementById("others-back-btn").style.display = "block";
 
         renderOthersDetail(id);
     });
 }
 
-const othersBack = document.getElementById("others-back-btn");
-if (othersBack) {
-    othersBack.addEventListener("click", () => {
-        document.getElementById("others-list").style.display = "none";
-        document.getElementById("others-summary-list").style.display = "block";
-        othersBack.style.display = "none";
-    });
-}
-
+/* ============================
+   初期表示
+============================ */
 document.addEventListener("DOMContentLoaded", () => {
+
+    const modalClose = document.getElementById("others-modal-close");
+    if (modalClose) {
+        modalClose.addEventListener("click", () => {
+            const modal = document.getElementById("others-modal");
+            modal.style.display = "none";
+        });
+    }
+
     if (document.getElementById("others-summary-list")) {
-        document.getElementById("others-list").style.display = "none";
-        document.getElementById("others-back-btn").style.display = "none";
-        renderOthersSummaryList(getItemsByCategory("others"));
+        renderOthersSummaryList();
     }
 });
