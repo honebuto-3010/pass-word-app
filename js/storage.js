@@ -44,9 +44,9 @@ async function backupToIndexedDB() {
     const data = getItems();
     data.forEach(item => store.put(item));
 
-    return new promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
        tx.oncomplete = () => resolve();
-       tx.oneeroor = () => reject(tx.eroor);
+       tx.onerror = () => reject(tx.error);
     });
 }
 
