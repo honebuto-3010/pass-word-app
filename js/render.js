@@ -2,6 +2,7 @@
    EMAIL
 ============================ */
 function renderEmailSummaryList(data) {
+    console.log("受け取ったdata", data);
     const list = document.getElementById("email-summary-list");
     if (!list) return;
     list.innerHTML = "";
