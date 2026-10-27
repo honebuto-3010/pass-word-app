@@ -118,6 +118,6 @@ function deleteItem(createdAt) {
 ============================================ */
 
 document.addEventListener("DOMContentLoaded", () => {
-    restoreFromIndexedDB();
+    // restoreFromIndexedDB();
 });
 
