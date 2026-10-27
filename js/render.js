@@ -2,14 +2,11 @@
    EMAIL
 ============================ */
 function renderEmailSummaryList(data) {
-    console.log("受け取ったdata", data);
     const list = document.getElementById("email-summary-list");
     if (!list) return;
     list.innerHTML = "";
 
     data.forEach(item => {
-       console.log("item", item);
-    console.log("icon", item.icon);
         const div = document.createElement("div");
         div.className = "summary-item email-summary";
         div.dataset.id = String(item.createdAt); // ★ 文字列化
