@@ -22,7 +22,7 @@ function openDB() {
 
         request.onupgradeneeded = function(event) {
             const db = event.target.result;
-           if(!db.objectStoreNames.contain("notes")) {
+           if(!db.objectStoreNames.contains("notes")) {
             db.createObjectStore("notes", { keyPath: "createdAt" });
         };
 
