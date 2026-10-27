@@ -13,7 +13,7 @@ function renderEmailSummaryList(data) {
 
         div.innerHTML = `
             <div class="summary-left">
-                <img src="images/kkrn_icon_mail_6-768x768.png" class="summary-icon">
+                <img src="${item.icon}" class="summary-icon">
                 <div>
                     <div class="summary-service">${item.name}</div>
                     <div class="summary-hidden">••••••••</div>
