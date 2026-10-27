@@ -40,17 +40,20 @@ async function backupToIndexedDB() {
     const tx = db.transaction("notes", "readwrite");
     const store = tx.objectStore("notes");
 
+   store.clear();
     const data = getItems();
     data.forEach(item => store.put(item));
 
-    return tx.complete;
+    return new promise((resolve, reject) => {
+       tx.oncomplete = () => resolve();
+       tx.oneeroor = () => reject(tx.eroor);
+    });
 }
 
 async function restoreFromIndexedDB() {
     const db = await openDB();
     const tx = db.transaction("notes", "readonly");
     const store = tx.objectStore("notes");
-
     const request = store.getAll();
 
     request.onsuccess = function() {
@@ -78,7 +81,7 @@ function getItemsByCategory(category) {
    データ追加
 ============================================ */
 
-function addItem(name, value, icon, type) {
+async function addItem(name, value, icon, type) {
     const data = getItems();
 
     const newItem = {
@@ -92,7 +95,7 @@ function addItem(name, value, icon, type) {
     data.push(newItem);
     localStorage.setItem("secureNotes", JSON.stringify(data));
 
-    backupToIndexedDB(); // ★ 自動バックアップ
+    await backupToIndexedDB(); // ★ 自動バックアップ
 }
 
 /* ============================================
