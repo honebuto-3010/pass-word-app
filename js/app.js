@@ -41,19 +41,12 @@ document.getElementById("add-service-btn").addEventListener("click", () => {
         return;
     }
 
-    // 保存するデータ構造
-    const newItem = {
-        name: name,
-        value: value,
-        icon: selectedIcon,
-        type: type,
-        createdAt: Date.now() // 削除用のユニークID
-    };
-
-    // ローカルストレージに保存
-    const data = JSON.parse(localStorage.getItem("secureNotes") || "[]");
-    data.push(newItem);
-    localStorage.setItem("secureNotes", JSON.stringify(data));
+ await addItem(
+     name,
+     value,
+     selectedicon,
+     type
+     );
 
     // モーダルを閉じる
     document.getElementById("add-service-modal").style.display = "none";
