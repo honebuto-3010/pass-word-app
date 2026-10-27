@@ -33,11 +33,14 @@ document.querySelectorAll(".icon-choice").forEach(icon => {
 // 登録処理（ADD）
 // ===============================
 document.getElementById("add-service-btn").addEventListener("click", () => {
-
+    console.log("登録ボタン押下");
     const name = document.getElementById("new-service-name").value.trim();
     const type = document.getElementById("new-service-type").value;
     const value = document.getElementById("new-service-value").value.trim();
-
+    console.log(name);
+    console.log(type);
+    console.log(value);
+    console.log(selectedIcon);
     if (!name || !value || !selectedIcon) {
         alert("サービス名・内容・アイコンを選択してください");
         return;
