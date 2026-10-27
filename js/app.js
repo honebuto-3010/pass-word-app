@@ -3,6 +3,7 @@
 // ===============================
 
 // モーダルを開く
+console.log("app.js 読み込み成功");
 document.getElementById("add-service-open-btn").addEventListener("click", () => {
     document.getElementById("add-service-modal").style.display = "block";
 });
