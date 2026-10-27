@@ -15,15 +15,28 @@ if (savedVersion === null) {
 /* ============================================
    IndexedDB バックアップ
 ============================================ */
-
 function openDB() {
     return new Promise((resolve, reject) => {
-        const request = indexedDB.open("secureNotesBackup", 1);
+
+        const request = indexedDB.open(
+            "secureNotesBackup",
+            1
+        );
 
         request.onupgradeneeded = function(event) {
+
             const db = event.target.result;
-           if(!db.objectStoreNames.contains("notes")) {
-            db.createObjectStore("notes", { keyPath: "createdAt" });
+
+            if (!db.objectStoreNames.contains("notes")) {
+
+                db.createObjectStore(
+                    "notes",
+                    {
+                        keyPath: "createdAt"
+                    }
+                );
+
+            }
         };
 
         request.onsuccess = function(event) {
@@ -33,6 +46,7 @@ function openDB() {
         request.onerror = function(event) {
             reject(event.target.error);
         };
+
     });
 }
 
