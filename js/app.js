@@ -43,7 +43,7 @@ document.getElementById("add-service-btn").addEventListener("click", () => {
         return;
     }
 
- await addItem(
+  addItem(
      name,
      value,
      selectedicon,
