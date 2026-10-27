@@ -49,7 +49,7 @@ document.getElementById("add-service-btn").addEventListener("click", () => {
   addItem(
      name,
      value,
-     selectedicon,
+     selectedIcon,
      type
      );
 
