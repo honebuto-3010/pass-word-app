@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,14 +16,14 @@
 
 <body>
 
-
     <!-- 右端縦配置ヘッダー（閲覧専用なのでタイトルのみ） -->
     <header class="top-header">
         <div class="header-right-block">
             <h1 class="app-title">メールアドレス</h1>
         </div>
     </header>
-   <!-- メールアドレスカード一覧 -->
+
+    <!-- メールアドレスカード一覧 -->
     <main>
 
         <!-- 一覧カード（メールアドレスは隠す） -->
@@ -35,9 +36,9 @@
             <!-- JS（render.js）でカードが描画される -->
         </div>
 
-     <button id="email-back-btn" class="back-btn" style="display:none;">戻る</button>
-    </main>
+        <button id="email-back-btn" class="back-btn" style="display:none;">戻る</button>
 
+    </main>
 
     <!-- 詳細モーダル（閲覧専用） -->
     <div id="email-modal" class="modal">
@@ -49,49 +50,50 @@
         </div>
     </div>
 
-    <!-- 下部ナビゲーションバー -->
+    <!-- 下部ナビゲーションバー（画像ゼロ・テキストのみ仕様） -->
     <footer class="nav-footer">
-        <nav class="bottom-nav">
+        <nav class="bottom-nav bottom-nav-5">
 
             <!-- HOME -->
-        <div class="nav-item" data-page="index.html">
-            <img src="kkrn_icon_home_1-768x768.png" alt="Home" class="nav-icon">
-            <span class="nav-label">Home</span>
-        </div>
+            <div class="nav-item" data-page="index.html">
+                <span class="nav-label">ホーム</span>
+                <span class="nav-sub">Home</span>
+            </div>
 
             <!-- 個人情報 -->
             <div class="nav-item" data-page="personal.html">
-                <img src="kkrn_icon_user_1-768x768.png" alt="Personal" class="nav-icon">
                 <span class="nav-label">個人情報</span>
+                <span class="nav-sub">Personal</span>
             </div>
 
             <!-- メール（現在のページ） -->
             <div class="nav-item active" data-page="email.html">
-                <img src="kkrn_icon_mail_6-768x768.png" alt="Email" class="nav-icon">
-                <span class="nav-label">メールアドレス</span>
+                <span class="nav-label">メール</span>
+                <span class="nav-sub">Email</span>
             </div>
 
             <!-- ID / パスワード -->
             <div class="nav-item" data-page="passwords.html">
-                <img src="kkrn_icon_security_11-768x768.png" alt="ID" class="nav-icon">
                 <span class="nav-label">パスワード</span>
+                <span class="nav-sub">Passwords</span>
             </div>
 
             <!-- その他 -->
             <div class="nav-item" data-page="others.html">
-                <img src="kkrn_icon_notepc_1-768x768.png" alt="Others" class="nav-icon">
                 <span class="nav-label">その他</span>
+                <span class="nav-sub">Others</span>
             </div>
 
         </nav>
     </footer>
 
     <!-- JS -->
-<script src="js/navigation.js"></script>
-<script src="js/modal.js"></script>
-<script src="js/storage.js"></script>
-<script src="js/render.js"></script>
-
+    <script src="js/navigation.js"></script>
+    <script src="js/modal.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/render.js"></script>
 
 </body>
+
+
 </html>
