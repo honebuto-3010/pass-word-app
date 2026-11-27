@@ -1,5 +1,3 @@
-// 公開時だけこの1行を入れると、すべての console.log が無効になります
-console.log = function() {};
 /* ============================
    EMAIL
 ============================ */
@@ -11,18 +9,18 @@ function renderEmailSummaryList(data) {
     data.forEach(item => {
         const div = document.createElement("div");
         div.className = "summary-item email-summary";
-        div.dataset.id = String(item.createdAt); // ★ 文字列化
+        div.dataset.id = String(item.createdAt);
 
         div.innerHTML = `
             <div class="summary-left">
-                <img src="${item.icon}" class="summary-icon">
+                <span class="category-badge badge-email">EMAIL</span>
                 <div>
                     <div class="summary-service">${item.name}</div>
                     <div class="summary-hidden">••••••••</div>
                 </div>
             </div>
 
-            <button class="delete-btn" data-id="${item.createdAt}">×</button>
+            <button class="delete-btn" data-id="${item.createdAt}" aria-label="削除">×</button>
         `;
 
         list.appendChild(div);
@@ -40,20 +38,33 @@ function renderEmailDetail(id) {
     const data = getItemsByCategory("email");
     container.innerHTML = "";
 
-    const item = data.find(x => String(x.createdAt) === String(id)); // ★ 文字列比較
+    const item = data.find(x => String(x.createdAt) === String(id));
     if (!item) return;
 
     const card = document.createElement("div");
     card.className = "service-card";
 
     card.innerHTML = `
-        <img src="${item.icon}" class="service-icon">
         <div class="service-info">
+            <span class="category-badge badge-email">EMAIL</span>
             <h3 class="service-name">${item.name}</h3>
             <p class="service-value">${item.value}</p>
         </div>
-        <button class="close-btn">×</button>
+        <div class="card-actions">
+            <button type="button" class="copy-btn">コピー</button>
+            <button type="button" class="close-btn" aria-label="閉じる">×</button>
+        </div>
     `;
+
+    // コピーボタンの処理
+    const copyBtn = card.querySelector(".copy-btn");
+    copyBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        navigator.clipboard.writeText(item.value).then(() => {
+            copyBtn.textContent = "完了";
+            setTimeout(() => { copyBtn.textContent = "コピー"; }, 1500);
+        });
+    });
 
     // 詳細カードの × → 閉じる（削除ではない）
     const closeBtn = card.querySelector(".close-btn");
@@ -83,11 +94,11 @@ if (emailSummary) {
 
         // 一覧の × → 完全削除
         if (e.target.classList.contains("delete-btn")) {
-            e.stopPropagation(); // ★ 詳細へ飛ぶのを防止
+            e.stopPropagation();
             const id = String(e.target.dataset.id);
 
             if (confirm("削除しますか？")) {
-                deleteItem(id); // ★ 完全削除
+                deleteItem(id);
                 renderEmailSummaryList(getItemsByCategory("email"));
             }
             return;
@@ -141,14 +152,14 @@ function renderPersonalSummaryList() {
 
         div.innerHTML = `
             <div class="summary-left">
-                <img src="${item.icon}" class="summary-icon">
+                <span class="category-badge badge-personal">PERSONAL</span>
                 <div>
                     <div class="summary-service">${item.name}</div>
                     <div class="summary-hidden">••••••••</div>
                 </div>
             </div>
 
-            <button class="delete-btn" data-id="${item.createdAt}">×</button>
+            <button class="delete-btn" data-id="${item.createdAt}" aria-label="削除">×</button>
         `;
 
         list.appendChild(div);
@@ -160,8 +171,8 @@ function renderPersonalDetail(id) {
     if (!container) return;
 
     const modal = document.getElementById("personal-modal");
-    const modalTitle = document.getElementById("personal-modal-title");
-    const modalValue = document.getElementById("personal-modal-value");
+    const modalTitle = document.getElementById("modal-title");
+    const modalValue = document.getElementById("modal-value");
 
     const data = getItemsByCategory("personal");
     container.innerHTML = "";
@@ -173,13 +184,26 @@ function renderPersonalDetail(id) {
     card.className = "service-card";
 
     card.innerHTML = `
-        <img src="${item.icon}" class="service-icon">
         <div class="service-info">
+            <span class="category-badge badge-personal">PERSONAL</span>
             <h3 class="service-name">${item.name}</h3>
             <p class="service-value">${item.value}</p>
         </div>
-        <button class="close-btn">×</button>
+        <div class="card-actions">
+            <button type="button" class="copy-btn">コピー</button>
+            <button type="button" class="close-btn" aria-label="閉じる">×</button>
+        </div>
     `;
+
+    // コピーボタンの処理
+    const copyBtn = card.querySelector(".copy-btn");
+    copyBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        navigator.clipboard.writeText(item.value).then(() => {
+            copyBtn.textContent = "完了";
+            setTimeout(() => { copyBtn.textContent = "コピー"; }, 1500);
+        });
+    });
 
     // 閉じる専用
     const closeBtn = card.querySelector(".close-btn");
@@ -236,7 +260,7 @@ if (personalSummary) {
 ============================ */
 document.addEventListener("DOMContentLoaded", () => {
 
-    const modalClose = document.getElementById("personal-modal-close");
+    const modalClose = document.getElementById("modal-close");
     if (modalClose) {
         modalClose.addEventListener("click", () => {
             const modal = document.getElementById("personal-modal");
@@ -248,6 +272,7 @@ document.addEventListener("DOMContentLoaded", () => {
         renderPersonalSummaryList();
     }
 });
+
 
 /* ============================
    PASSWORDS
@@ -266,14 +291,14 @@ function renderPasswordsSummaryList() {
 
         div.innerHTML = `
             <div class="summary-left">
-                <img src="${item.icon}" class="summary-icon">
+                <span class="category-badge badge-passwords">PASSWORD</span>
                 <div>
                     <div class="summary-service">${item.name}</div>
                     <div class="summary-hidden">••••••••</div>
                 </div>
             </div>
 
-            <button class="delete-btn" data-id="${item.createdAt}">×</button>
+            <button class="delete-btn" data-id="${item.createdAt}" aria-label="削除">×</button>
         `;
 
         list.appendChild(div);
@@ -285,8 +310,8 @@ function renderPasswordsDetail(id) {
     if (!container) return;
 
     const modal = document.getElementById("passwords-modal");
-    const modalTitle = document.getElementById("passwords-modal-title");
-    const modalValue = document.getElementById("passwords-modal-value");
+    const modalTitle = document.getElementById("modal-title");
+    const modalValue = document.getElementById("modal-value");
 
     const data = getItemsByCategory("passwords");
     container.innerHTML = "";
@@ -298,13 +323,26 @@ function renderPasswordsDetail(id) {
     card.className = "service-card";
 
     card.innerHTML = `
-        <img src="${item.icon}" class="service-icon">
         <div class="service-info">
+            <span class="category-badge badge-passwords">PASSWORD</span>
             <h3 class="service-name">${item.name}</h3>
             <p class="service-value">${item.value}</p>
         </div>
-        <button class="close-btn">×</button>
+        <div class="card-actions">
+            <button type="button" class="copy-btn">コピー</button>
+            <button type="button" class="close-btn" aria-label="閉じる">×</button>
+        </div>
     `;
+
+    // コピーボタンの処理
+    const copyBtn = card.querySelector(".copy-btn");
+    copyBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        navigator.clipboard.writeText(item.value).then(() => {
+            copyBtn.textContent = "完了";
+            setTimeout(() => { copyBtn.textContent = "コピー"; }, 1500);
+        });
+    });
 
     // 閉じる専用
     const closeBtn = card.querySelector(".close-btn");
@@ -361,7 +399,7 @@ if (passwordsSummary) {
 ============================ */
 document.addEventListener("DOMContentLoaded", () => {
 
-    const modalClose = document.getElementById("passwords-modal-close");
+    const modalClose = document.getElementById("modal-close");
     if (modalClose) {
         modalClose.addEventListener("click", () => {
             const modal = document.getElementById("passwords-modal");
@@ -391,14 +429,14 @@ function renderOthersSummaryList() {
 
         div.innerHTML = `
             <div class="summary-left">
-                <img src="${item.icon}" class="summary-icon">
+                <span class="category-badge badge-others">OTHERS</span>
                 <div>
                     <div class="summary-service">${item.name}</div>
                     <div class="summary-hidden">••••••••</div>
                 </div>
             </div>
 
-            <button class="delete-btn" data-id="${item.createdAt}">×</button>
+            <button class="delete-btn" data-id="${item.createdAt}" aria-label="削除">×</button>
         `;
 
         list.appendChild(div);
@@ -410,8 +448,8 @@ function renderOthersDetail(id) {
     if (!container) return;
 
     const modal = document.getElementById("others-modal");
-    const modalTitle = document.getElementById("others-modal-title");
-    const modalValue = document.getElementById("others-modal-value");
+    const modalTitle = document.getElementById("modal-title");
+    const modalValue = document.getElementById("modal-value");
 
     const data = getItemsByCategory("others");
     container.innerHTML = "";
@@ -423,13 +461,26 @@ function renderOthersDetail(id) {
     card.className = "service-card";
 
     card.innerHTML = `
-        <img src="${item.icon}" class="service-icon">
         <div class="service-info">
+            <span class="category-badge badge-others">OTHERS</span>
             <h3 class="service-name">${item.name}</h3>
             <p class="service-value">${item.value}</p>
         </div>
-        <button class="close-btn">×</button>
+        <div class="card-actions">
+            <button type="button" class="copy-btn">コピー</button>
+            <button type="button" class="close-btn" aria-label="閉じる">×</button>
+        </div>
     `;
+
+    // コピーボタンの処理
+    const copyBtn = card.querySelector(".copy-btn");
+    copyBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        navigator.clipboard.writeText(item.value).then(() => {
+            copyBtn.textContent = "完了";
+            setTimeout(() => { copyBtn.textContent = "コピー"; }, 1500);
+        });
+    });
 
     // 閉じる専用
     const closeBtn = card.querySelector(".close-btn");
@@ -486,7 +537,7 @@ if (othersSummary) {
 ============================ */
 document.addEventListener("DOMContentLoaded", () => {
 
-    const modalClose = document.getElementById("others-modal-close");
+    const modalClose = document.getElementById("modal-close");
     if (modalClose) {
         modalClose.addEventListener("click", () => {
             const modal = document.getElementById("others-modal");
